@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -33,11 +34,16 @@ public class DiscussAction extends ActionSupport{
         discuss.setObserverId(39);
         discuss.setDcontent(null);//"我喜欢评论，我最喜欢评论了，这个是我的评论内容，够长了吧，text类型的"
 
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        String time = dateFormat.format(date);
+        Date date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String time = sdf.format(new Date());
+        try {
+            date = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        discuss.setDtime(time);
+        discuss.setDtime(date);
 
         service.addDiscuss(discuss);
 
@@ -57,16 +63,21 @@ public class DiscussAction extends ActionSupport{
         response.setContentType("text/html;charset=utf-8");
 
         Discuss discuss = new Discuss();
-        discuss.setId(2);
+        discuss.setId(3);
         discuss.setSendId(8);
         discuss.setObserverId(38);
         discuss.setDcontent(null);//"我喜欢评论，我最喜欢评论了，这个是我的评论内容，够长了吧，text类型的"
 
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        String time = dateFormat.format(date);
+        Date date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String time = sdf.format(new Date());
+        try {
+            date = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        discuss.setDtime(time);
+        discuss.setDtime(date);
 
         service.updateDiscuss(discuss);
 

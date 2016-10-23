@@ -1,5 +1,6 @@
 package com.zhuolang.service;
 
+import com.zhuolang.dto.SendDto;
 import com.zhuolang.model.Send;
 
 import java.util.List;
@@ -10,7 +11,11 @@ import java.util.List;
 public interface ISendService {
     void addSend(Send send);
     void updateSend(Send send);
-    List<Send> findSend(String sql);
+    List<SendDto> findSendDto();
+    List<Send> findSend();
+    SendDto findSendDtoById(int id);
+    List<Send> findSendById(int id);
     void deleteSend(List<Send> findSend);
+//    int deleteSendById(int id);
 
 }

@@ -1,6 +1,7 @@
 package com.zhuolang.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by hzg on 2016/10/13.
@@ -16,7 +17,7 @@ public class Send {
     @Column(name = "sendContent")
     private String sendContent;
     @Column(name="sendTime")
-    private String sendTime;
+    private Date sendTime;
 
     public int getSendId() {
         return sendId;
@@ -42,11 +43,11 @@ public class Send {
         this.sendContent = sendContent;
     }
 
-    public String getSendTime() {
+    public Date getSendTime() {
         return sendTime;
     }
 
-    public void setSendTime(String sendTime) {
+    public void setSendTime(Date sendTime) {
         this.sendTime = sendTime;
     }
 

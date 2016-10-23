@@ -19,7 +19,7 @@ public class Discuss {
     @Column(name = "dcontent")
     private String dcontent;
     @Column(name = "dtime")
-    private String dtime;
+    private Date dtime;
 
     public int getId() {
         return id;
@@ -53,11 +53,11 @@ public class Discuss {
         this.dcontent = dcontent;
     }
 
-    public String getDtime() {
+    public Date getDtime() {
         return dtime;
     }
 
-    public void setDtime(String dtime) {
+    public void setDtime(Date dtime) {
         this.dtime = dtime;
     }
 

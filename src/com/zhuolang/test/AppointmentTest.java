@@ -32,9 +32,9 @@ public class AppointmentTest {
         appointment.setPatientId(38);
         appointment.setDoctorId(42);
         appointment.setSeeTime(new Date());
-        appointment.setDisease("喉咙发炎,喉咙痛test");
+        appointment.setDisease("喉咙发炎,喉咙痛");
         appointment.setDateTime(new Date());
-        appointment.setDiagnose("感冒咳嗽test");
+        appointment.setDiagnose("感冒咳嗽");
         appointment.setDstar(5);
 
         service.addAppointment(appointment);

@@ -27,7 +27,7 @@ public class UserTest {
 		user.setPassword("123456");
 		user.setName("吴乃福");
 		user.setAge(18);
-		user.setGender(1);
+		user.setGender(0);
 		user.setPhone("18925060991");
 		user.setAddress("廉江");
 		user.setSignature("道不同，不相为谋");

@@ -1,5 +1,6 @@
 package com.zhuolang.test;
 
+import com.zhuolang.dto.SendDto;
 import com.zhuolang.model.Send;
 import com.zhuolang.service.ISendService;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,36 +28,48 @@ public class SendTest {
         Send send = new Send();
         send.setSendContent("发送信息");
         send.setUserId(38);
-        send.setSendTime("12:12:00");
+        send.setSendTime(new Date());
 
         service.addSend(send);
     }
 
     @Test
-    public void testDelete(){
-        int userId=38;
-        String hql = "from Send where userId = '"+userId+"'";
-        service.deleteSend(service.findSend(hql));
-    }
-
-    @Test
     public void testUpdate(){
+        //通过什么来修改更新信息的？这里不应该出现id？应该是通过名字获取id?还是直接用当前用户的id?
         Send send = new Send();
         send.setSendContent("发送信息改为修改信息");
-        send.setSendId(4);
+        send.setSendId(6);
         send.setUserId(38);
-//        Date time = new Date();
-//        send.setSendTime(time.toString());
-        send.setSendTime("2016/10/13 20:43");
+        send.setSendTime(new Date());
 
         service.updateSend(send);
     }
 
     @Test
-    public void testFind(){
+    public void testFindDto(){
+        List<SendDto> list = service.findSendDto();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+    }
 
-        String hql="from Send where userId = '"+ 38 +"'";
-        List<Send> list = service.findSend(hql);
-        System.out.println(list);
+    @Test
+    public void testFind() {
+        List<Send> sendList=service.findSend();
+        for (int i = 0; i < sendList.size(); i++) {
+            System.out.println(sendList.get(i));
+        }
+    }
+
+    @Test
+    public void testFindById() {
+        System.out.println(service.findSendDtoById(6));
+        System.out.println(service.findSendById(6));
+    }
+
+    @Test
+    public void testDelete(){
+        service.deleteSend(service.findSendById(6));//通过id找到send
+//        service.deleteSendById(7);//其实跟上面的一样
     }
 }

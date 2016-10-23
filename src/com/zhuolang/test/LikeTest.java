@@ -25,8 +25,8 @@ public class LikeTest {
     @Test
     public void testAdd(){
         Like like = new Like();
-        like.setSendId(8);
-        like.setLikesId(38);
+        like.setSendId(10);
+        like.setLikesId(42);
         Date date = new Date();
         like.setLikesTime(date);
 

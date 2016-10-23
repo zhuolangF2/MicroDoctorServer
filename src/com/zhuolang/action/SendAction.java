@@ -1,6 +1,7 @@
 package com.zhuolang.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.zhuolang.dto.SendDto;
 import com.zhuolang.model.Send;
 import com.zhuolang.service.ISendService;
 import org.apache.struts2.ServletActionContext;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,7 +32,7 @@ public class SendAction extends ActionSupport{
         Send send = new Send();
         send.setSendContent("发送信息");
         send.setUserId(39);
-        send.setSendTime("09:01:00");
+        send.setSendTime(new Date());
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"Send success\"}";
@@ -46,9 +48,9 @@ public class SendAction extends ActionSupport{
         HttpServletRequest request = ServletActionContext.getRequest();
 
         response.setContentType("text/html;charset=utf-8");
-        int userId=38;
-        String hql = "from Send where userId = '"+userId+"'";
-        service.deleteSend(service.findSend(hql));
+//        int userId=38;
+//        String hql = "from Send where userId = '"+userId+"'";
+//        service.deleteSend(service.findSend(hql));
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"Send success\"}";
@@ -68,7 +70,7 @@ public class SendAction extends ActionSupport{
         send.setSendContent("发送信息改为修改信息");
         send.setSendId(6);
         send.setUserId(39);
-        send.setSendTime("2016/10/13 20:43");
+        send.setSendTime(new Date());
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"Send success\"}";
@@ -86,14 +88,14 @@ public class SendAction extends ActionSupport{
 
         response.setContentType("text/html;charset=utf-8");
 
-
-        String hql="from Send where userId = '"+ 39 +"'";
-        List<Send> list = service.findSend(hql);
-        System.out.println(list);
+        List<SendDto> list = service.findSendDto();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
 
         PrintWriter out = response.getWriter();
         out.println("{\"Send success\"}");
-        out.println(list);
+        out.println(list.toString());
         out.flush();
         out.close();
 
