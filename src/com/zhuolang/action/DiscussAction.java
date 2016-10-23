@@ -95,8 +95,9 @@ public class DiscussAction extends ActionSupport{
         HttpServletRequest request = ServletActionContext.getRequest();
 
         response.setContentType("text/html;charset=utf-8");
-        String hql = "from Discuss where id = '" + 2 + "'";
-        service.deleteDiscuss(service.findDiscuss(hql));
+//        String hql = "from Discuss where id = '" + 2 + "'";
+//        service.deleteDiscuss(service.findDiscuss(hql));
+        service.deleteDiscuss(service.findDiscussById(2));
 
         PrintWriter out = response.getWriter();
         String jsonString="{\"discuss success\"}";
@@ -112,12 +113,13 @@ public class DiscussAction extends ActionSupport{
         HttpServletRequest request = ServletActionContext.getRequest();
 
         response.setContentType("text/html;charset=utf-8");
-        String hql="from Discuss where id ='"+3+"'";
+//        String hql="from Discuss where id ='"+3+"'";
 
         PrintWriter out = response.getWriter();
         String jsonString="{\"discuss success\"}";
         out.println(jsonString);
-        out.println(service.findDiscuss(hql));
+//        out.println(service.findDiscuss(hql));
+        out.println(service.findDiscussById(3));
         out.flush();
         out.close();
         return "success";

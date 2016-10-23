@@ -44,9 +44,11 @@ public class DoctorTest {
 
 	@Test
 	public void testDelete(){
-		int amount=123456;
-		String hql = "from Doctor where amount = '"+amount+"'";
-		service.deleteDoctor(service.findDoctor(hql));
+//		int amount=123456;
+//		String hql = "from Doctor where amount = '"+amount+"'";
+//		service.deleteDoctor(service.findDoctor(hql));
+
+		service.deleteDoctor(service.findDoctorById(7));
 	}
 
 	@Test
@@ -68,8 +70,11 @@ public class DoctorTest {
 //		int doctorId=user.get
 //		String hql2=  "select id from User where name ='"+name+"'";
 //		System.out.println(hql2);
-		String hql = "from Doctor where doctorId = '" +42 + "'";
-		List<Doctor> list = service.findDoctor(hql);
-		System.out.println(list);
+
+//		String hql = "from Doctor where doctorId = '" +42 + "'";
+//		List<Doctor> list = service.findDoctor(hql);
+
+		System.out.println(service.findAllDoctor());//找到所有的医师
+//		System.out.println(service.findDoctorById(7));//通过id找到医师
 	}
 }

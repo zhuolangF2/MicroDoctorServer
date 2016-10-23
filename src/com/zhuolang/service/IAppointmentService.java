@@ -14,6 +14,8 @@ import java.util.List;
 public interface IAppointmentService {
     void addAppointment(Appointment appointment);
     void updateAppointment(Appointment appointment);
-    List<Appointment> findAppointment(String hql);
+//    List<Appointment> findAppointment(String hql);
+    List<Appointment> findAllAppointment();
+    List<Appointment> findAppointmentById(int id);
     void deleteAppointment(List<Appointment> findAppointment);
 }

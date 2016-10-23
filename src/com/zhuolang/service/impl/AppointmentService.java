@@ -6,6 +6,7 @@ import com.zhuolang.service.IAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,9 +40,22 @@ public class AppointmentService implements IAppointmentService{
     }
 
     @Override
-    public List<Appointment> findAppointment(String hql) {
-        return dao.find(hql);
+    public List<Appointment> findAllAppointment() {
+        return dao.find("from Appointment");
     }
+
+    @Override
+    public List<Appointment> findAppointmentById(int id) {
+        String hql="from Appointment appointment where appointment.id=?";
+        List<Object> idObject=new ArrayList<Object>();
+        idObject.add(id);
+        return dao.find(hql, idObject);
+    }
+
+//    @Override
+//    public List<Appointment> findAppointment(String hql) {
+//        return dao.find(hql);
+//    }
 
     @Override
     public void deleteAppointment(List<Appointment> findAppointment) {

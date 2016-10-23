@@ -14,6 +14,8 @@ import com.zhuolang.model.User;
 public interface IUserService {
 	void addUser(User user);
 	void updateUser(User user);
-	List<User> findUser(String hql);
+	List<User> findUserById(int id);
+	List<User> findAllUser();
+//	List<User> findUser(String hql);
 	void deleteUser(List<User> findUser);
 }

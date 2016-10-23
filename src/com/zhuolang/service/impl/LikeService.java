@@ -6,6 +6,7 @@ import com.zhuolang.service.ILikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,9 +29,24 @@ public class LikeService implements ILikeService {
     }
 
     @Override
-    public List<Like> findLike(String hql) {
+    public List<Like> findLikeById(int id) {
+        String hql = "from Like l where l.id=?";
+        List<Object> idObject=new ArrayList<Object>();
+        idObject.add(id);
+        List<Like> likeList = dao.find(hql, idObject);
+        return likeList;
+    }
+
+    @Override
+    public List<Like> findAllLike() {
+        String hql = "from Like";
         return dao.find(hql);
     }
+
+//    @Override
+//    public List<Like> findLike(String hql) {
+//        return dao.find(hql);
+//    }
 
     @Override
     public void deleteLike(List<Like> findLike) {

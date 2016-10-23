@@ -12,7 +12,7 @@ public interface ISendService {
     void addSend(Send send);
     void updateSend(Send send);
     List<SendDto> findSendDto();
-    List<Send> findSend();
+    List<Send> findAllSend();
     SendDto findSendDtoById(int id);
     List<Send> findSendById(int id);
     void deleteSend(List<Send> findSend);

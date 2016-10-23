@@ -10,6 +10,8 @@ import java.util.List;
 public interface ILikeService {
     void addLike(Like like);
     void updateLike(Like like);
-    List<Like> findLike(String hql);
+//    List<Like> findLike(String hql);
+    List<Like> findLikeById(int id);
+    List<Like> findAllLike();
     void deleteLike(List<Like> findLike);
 }

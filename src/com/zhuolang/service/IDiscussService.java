@@ -10,6 +10,8 @@ import java.util.List;
 public interface IDiscussService {
     void addDiscuss(Discuss discuss);
     void updateDiscuss(Discuss discuss);
-    List<Discuss> findDiscuss(String hql);
+//    List<Discuss> findDiscuss(String hql);
+    List<Discuss> findAllDiscuss();
+    List<Discuss> findDiscussById(int id);
     void deleteDiscuss(List<Discuss> findDiscuss);
 }

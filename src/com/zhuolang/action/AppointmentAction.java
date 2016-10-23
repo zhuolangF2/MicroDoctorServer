@@ -77,8 +77,10 @@ public class AppointmentAction extends ActionSupport{
         // int id = (int) request.getAttribute("user_id");
         response.setContentType("text/html;charset=utf-8");
 
-        String hql = "from Appointment where id = 3";
-        service.deleteAppointment(service.findAppointment(hql));
+//        String hql = "from Appointment where id = 3";
+//        service.deleteAppointment(service.findAppointment(hql));
+
+        service.deleteAppointment(service.findAppointmentById(3));
 
         // 测试输出json数据
         PrintWriter out = response.getWriter();
@@ -136,8 +138,9 @@ public class AppointmentAction extends ActionSupport{
         HttpServletRequest request=ServletActionContext.getRequest();
         response.setContentType("text/html;charset=utf-8");
 
-        String hql = "from Appointment where id = 2";
-        List<Appointment> list=service.findAppointment(hql);
+//        String hql = "from Appointment where id = 2";
+//        List<Appointment> list=service.findAppointment(hql);
+        List<Appointment> list = service.findAppointmentById(2);
         if (list!=null&&list.size()>0){
             request.setAttribute("students_list",list);//获取参数
         }

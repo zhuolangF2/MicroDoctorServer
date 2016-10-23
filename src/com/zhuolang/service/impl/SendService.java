@@ -9,7 +9,6 @@ import com.zhuolang.model.Send;
 import com.zhuolang.service.ISendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.plugin2.main.client.DisconnectedExecutionContext;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,11 +72,9 @@ public class SendService implements ISendService {
     }
 
     @Override
-    public List<Send> findSend() {
+    public List<Send> findAllSend() {
         String hql = "from Send";
-        List<Object> idObject = new ArrayList<Object>();
-        List<Send> sendList = dao.find(hql, idObject);
-        return sendList;
+        return dao.find(hql);
     }
 
     @Override

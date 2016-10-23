@@ -7,6 +7,8 @@ import com.zhuolang.dao.IDoctorDao;
 import com.zhuolang.model.Doctor;
 import com.zhuolang.service.IDoctorService;
 
+import javax.print.Doc;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("doctorService")
@@ -29,9 +31,24 @@ public class DoctorService implements IDoctorService {
 	}
 
 	@Override
-	public List<Doctor> findDoctor(String hql) {
+	public List<Doctor> findAllDoctor() {
+		String hql = "from Doctor";
 		return dao.find(hql);
 	}
+
+	@Override
+	public List<Doctor> findDoctorById(int id) {
+		String hql="from Doctor doctor where doctor.id=?";
+		List<Object> idObject = new ArrayList<Object>();
+		idObject.add(id);
+		List<Doctor> doctorList = dao.find(hql,idObject);
+		return doctorList;
+	}
+
+//	@Override
+//	public List<Doctor> findDoctor(String hql) {
+//		return dao.find(hql);
+//	}
 
 	@Override
 	public void deleteDoctor(List<Doctor> findDoctor) {

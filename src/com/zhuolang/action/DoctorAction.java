@@ -48,9 +48,10 @@ public class DoctorAction extends ActionSupport {
     public String delete() throws IOException {
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setContentType("text/html;charset=utf-8");
-        int amount = 234567;
-        String hql = "from Doctor where amount = '" + amount + "'";
-        service.deleteDoctor(service.findDoctor(hql));
+//        int amount = 234567;
+//        String hql = "from Doctor where amount = '" + amount + "'";
+//        service.deleteDoctor(service.findDoctor(hql));
+        service.deleteDoctor(service.findDoctorById(8));
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"doctor\"}";
@@ -89,8 +90,9 @@ public class DoctorAction extends ActionSupport {
 //        String name="吴乃福";
 
 
-        String hql = "from Doctor where doctorId = '" + 42 + "'";
-        List<Doctor> list = service.findDoctor(hql);
+//        String hql = "from Doctor where doctorId = '" + 42 + "'";
+//        List<Doctor> list = service.findDoctor(hql);
+        List<Doctor> list = service.findDoctorById(7);
         System.out.println(list);
 
         PrintWriter out = response.getWriter();

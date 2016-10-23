@@ -51,8 +51,10 @@ public class LikeAction extends ActionSupport{
 
         response.setContentType("text/html;charset=utf-8");
 
-        String hql = "from Like where id = '" + 7 + "'";
-        service.deleteLike(service.findLike(hql));
+//        String hql = "from Like where id = '" + 7 + "'";
+//        service.deleteLike(service.findLike(hql));
+
+        service.deleteLike(service.findLikeById(8));
 
 
         PrintWriter out = response.getWriter();
@@ -92,13 +94,15 @@ public class LikeAction extends ActionSupport{
 
         response.setContentType("text/html;charset=utf-8");
 
-        String hql = "from Like where id = '" +8 + "'";
-        List<Like> list = service.findLike(hql);
+//        String hql = "from Like where id = '" +8 + "'";
+//        List<Like> list = service.findLike(hql);
+
+        List<Like> likeList = service.findLikeById(8);
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"success like\"}";
         out.println(jsonString);
-        out.println(list);
+        out.println(likeList);
         out.flush();
         out.close();
 

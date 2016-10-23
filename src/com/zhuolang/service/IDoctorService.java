@@ -2,6 +2,7 @@ package com.zhuolang.service;
 
 import com.zhuolang.model.Doctor;
 
+import javax.print.Doc;
 import java.util.List;
 
 //@Service
@@ -13,7 +14,9 @@ public interface IDoctorService {
 	 */
 	void addDoctor(Doctor doctor);
     void updateDoctor(Doctor doctor);
-    List<Doctor> findDoctor(String hql);
+//    List<Doctor> findDoctor(String hql);
+	List<Doctor> findAllDoctor();
+	List<Doctor> findDoctorById(int id);
     void deleteDoctor(List<Doctor> findDoctor);
 
 }

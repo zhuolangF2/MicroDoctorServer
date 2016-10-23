@@ -25,8 +25,8 @@ public class LikeTest {
     @Test
     public void testAdd(){
         Like like = new Like();
-        like.setSendId(10);
-        like.setLikesId(42);
+        like.setSendId(8);
+        like.setLikesId(38);
         Date date = new Date();
         like.setLikesTime(date);
 
@@ -35,8 +35,9 @@ public class LikeTest {
 
     @Test
     public void testDelete() {
-        String hql = "from Like where id = '" + 5 + "'";
-        service.deleteLike(service.findLike(hql));
+//        String hql = "from Like where id = '" + 5 + "'";
+//        service.deleteLike(service.findLike(hql));
+        service.deleteLike(service.findLikeById(13));
     }
 
     @Test
@@ -52,9 +53,14 @@ public class LikeTest {
 
     @Test
     public void testFind() {
-        String hql = "from Like where id = '" +6 + "'";
-        List<Like> list = service.findLike(hql);
-        System.out.println(list);
+//        String hql = "from Like where id = '" +6 + "'";
+//        List<Like> list = service.findLike(hql);
+//        System.out.println(list);
+
+//        List<Like> likeList=service.findAllLike();
+        List<Like> likeList = service.findLikeById(14);
+        System.out.println(likeList);
+
     }
 
 }

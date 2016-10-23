@@ -44,8 +44,10 @@ public class AppointmentTest {
     @Test
     public void testDeleteById(){
 
-        String hql = "from Appointment where id = 1";
-        service.deleteAppointment(service.findAppointment(hql));
+//        String hql = "from Appointment where id = 1";
+//        service.deleteAppointment(service.findAppointment(hql));
+
+        service.deleteAppointment(service.findAppointmentById(1));
     }
 
     @Test
@@ -66,9 +68,11 @@ public class AppointmentTest {
 
     @Test
     public void testFind(){
-        String hql = "from Appointment where patientId = 2";
-        List<Appointment> list = service.findAppointment(hql);
-        System.out.println(list);
+//        String hql = "from Appointment where patientId = 2";
+//        List<Appointment> list = service.findAppointment(hql);
+//        System.out.println(list);
+        System.out.println(service.findAllAppointment());
+        System.out.println(service.findAppointmentById(2));
     }
 
 }

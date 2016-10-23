@@ -44,8 +44,10 @@ public class DiscussTest {
 
     @Test
     public void testDelete(){
-        String hql = "from Discuss where id = '" + 1 + "'";
-        service.deleteDiscuss(service.findDiscuss(hql));
+//        String hql = "from Discuss where id = '" + 1 + "'";
+//        service.deleteDiscuss(service.findDiscuss(hql));
+
+        service.deleteDiscuss(service.findDiscussById(1));
     }
 
     @Test
@@ -73,7 +75,10 @@ public class DiscussTest {
 
     @Test
     public void testFind(){
-        String hql="from Discuss where id ='"+15+"'";
-        System.out.println(service.findDiscuss(hql));
+//        String hql="from Discuss where id ='"+15+"'";
+//        System.out.println(service.findDiscuss(hql));
+
+//        System.out.println(service.findDiscussById(12));
+        System.out.println(service.findAllDiscuss());
     }
 }

@@ -55,10 +55,7 @@ public class SendTest {
 
     @Test
     public void testFind() {
-        List<Send> sendList=service.findSend();
-        for (int i = 0; i < sendList.size(); i++) {
-            System.out.println(sendList.get(i));
-        }
+        System.out.println(service.findAllSend());
     }
 
     @Test

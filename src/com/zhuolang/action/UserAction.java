@@ -53,14 +53,13 @@ public class UserAction extends ActionSupport {
 		 password = (String) request.getAttribute("password");
 		// 进行操作。。。
 		response.setContentType("text/html;charset=utf-8");
-		// response.setCharacterEncoding("UTF-8");
 		// 测试插入数据
         User user = new User();
         user.setNickname("nickname");
         user.setPassword("123456");
         user.setName("吴乃福");
         user.setAge(18);
-        user.setGender(1);
+        user.setGender(0);
         user.setPhone("18925060991");
         user.setAddress("廉江");
         user.setSignature("道不同，不相为谋");
@@ -89,9 +88,9 @@ public class UserAction extends ActionSupport {
 		// HttpServletRequest request = ServletActionContext.getRequest();
 		// int id = (int) request.getAttribute("user_id");
 		response.setContentType("text/html;charset=utf-8");
-		String name="黄宗贵";
-		String hql = "from User where name = '"+name+"'";
-		service.deleteUser(service.findUser(hql));
+//		String name="黄宗贵";
+//		String hql = "from User where name = '"+name+"'";
+		service.deleteUser(service.findUserById(38));
 		
 		// 测试输出json数据
 		PrintWriter out = response.getWriter();
@@ -144,9 +143,9 @@ public class UserAction extends ActionSupport {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request=ServletActionContext.getRequest();
 		response.setContentType("text/html;charset=utf-8");
-		String name="吴乃福";
-		String hql = "from User where name = '"+name+"'";
-		List<User> list = service.findUser(hql);
+//		String name="吴乃福";
+//		String hql = "from User where name = '"+name+"'";
+		List<User> list = service.findUserById(38);
 		if (list != null && list.size() > 0) {
 				request.setAttribute("students_list", list);
 		}

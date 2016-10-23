@@ -39,17 +39,17 @@ public class UserTest {
 	
 	@Test
 	public void testDeleteByName(){
-		String name="吴乃福";
-		String hql = "from User where name = '"+name+"'";
-		service.deleteUser(service.findUser(hql));
+//		String name="吴乃福";
+//		String hql = "from User where name = '"+name+"'";
+		service.deleteUser(service.findUserById(38));
 	}
 	
-	@Test
-	public void testDeleteByNickname(){
-		String nickname="nickname";
-		String hql = "from User where nickname = '"+nickname+"'";
-		service.deleteUser(service.findUser(hql));
-	}
+//	@Test
+//	public void testDeleteByNickname(){
+//		String nickname="nickname";
+//		String hql = "from User where nickname = '"+nickname+"'";
+//		service.deleteUser(service.findUser(hql));
+//	}
 	
 	@Test
 	public void testUpdate(){
@@ -71,9 +71,10 @@ public class UserTest {
 	
 	@Test
 	public void testFind(){
-		String name="吴乃福";
-		String hql = "from User where name = '"+name+"'";
-		List<User> list = service.findUser(hql);
+//		String name="吴乃福";
+//		String hql = "from User where name = '"+name+"'";
+//		List<User> list = service.findUserById(38);
+		List<User> list = service.findAllUser();
 		System.out.println(list);
 	}
 
