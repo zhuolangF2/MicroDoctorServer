@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="JUnit 4">
     <CLASSES>
-      <root url="jar://F:/jar/MeEclipseLib/plugins/org.junit_4.12.0.v201504281640/junit.jar!/" />
-      <root url="jar://F:/jar/MeEclipseLib/plugins/org.hamcrest.core_1.3.0.v201303031735.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JUnit 4/org.hamcrest.core_1.3.0.v201303031735.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JUnit 4/org.junit_4.12.0.v201504281640/junit.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

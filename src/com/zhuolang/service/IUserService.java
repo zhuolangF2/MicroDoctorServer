@@ -12,7 +12,7 @@ import com.zhuolang.model.User;
  */
 //@Service
 public interface IUserService {
-	void addUser(User user);
+	String addUser(User user);
 	void updateUser(User user);
 	List<User> findUserById(int id);
 	List<User> findAllUser();

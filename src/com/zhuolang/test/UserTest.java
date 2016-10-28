@@ -34,7 +34,7 @@ public class UserTest {
 		user.setIntroduction("大家好，我叫吴乃福jaslfjlajflajsfajsd");
 		user.setType(0);
 
-		service.addUser(user);
+		System.out.println(service.addUser(user));
 	}
 	
 	@Test

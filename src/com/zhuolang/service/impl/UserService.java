@@ -25,11 +25,13 @@ public class UserService implements IUserService {
      * 业务逻辑操作
      */
     @Override
-    public void addUser(User user) {
+    public String addUser(User user) {
         try {
             dao.save(user);
+            return "success";
         } catch (Exception e) {
             e.printStackTrace();
+            return "failure";
         }
     }
 

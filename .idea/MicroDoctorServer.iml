@@ -19,12 +19,13 @@
       </configuration>
       <facet type="Struts2" name="Struts 2">
         <configuration>
-          <fileset id="s2fileset" name="My Fileset " removed="false">
+          <fileset id="s2fileset2" name="My Fileset " removed="false">
             <file>file://$MODULE_DIR$/src/struts.xml</file>
-            <file>jar://F:/jar/MeEclipseLib/configuration/org.eclipse.osgi/73/0/.cp/data/2.1/core/struts2-json-plugin-2.2.1.jar!/struts-plugin.xml</file>
-            <file>jar://F:/jar/MeEclipseLib/configuration/org.eclipse.osgi/73/0/.cp/data/2.1/core/struts2-convention-plugin-2.2.1.jar!/struts-plugin.xml</file>
-            <file>jar://F:/jar/MeEclipseLib/configuration/org.eclipse.osgi/73/0/.cp/data/2.1/core/struts2-core-2.2.1.jar!/struts-default.xml</file>
-            <file>jar://F:/jar/MeEclipseLib/configuration/org.eclipse.osgi/73/0/.cp/data/2.1/core/struts2-embeddedjsp-plugin-2.2.1.jar!/struts-plugin.xml</file>
+            <file>jar://$MODULE_DIR$/lib/Struts 2.1 Libraries/2.1/core/struts2-convention-plugin-2.2.1.jar!/struts-plugin.xml</file>
+            <file>jar://$MODULE_DIR$/lib/Struts 2.1 Libraries/2.1/core/struts2-core-2.2.1.jar!/struts-default.xml</file>
+            <file>jar://$MODULE_DIR$/lib/Struts 2.1 Libraries/2.1/core/struts2-embeddedjsp-plugin-2.2.1.jar!/struts-plugin.xml</file>
+            <file>jar://$MODULE_DIR$/lib/Struts 2.1 Libraries/2.1/core/struts2-json-plugin-2.2.1.jar!/struts-plugin.xml</file>
+            <file>jar://$MODULE_DIR$/lib/Struts 2.1 Libraries/2.1/spring/struts2-spring-plugin-2.2.1.jar!/struts-plugin.xml</file>
           </fileset>
           <propertiesKeys disabled="false" />
         </configuration>
@@ -48,5 +49,6 @@
     <orderEntry type="library" name="Hibernate 4.1.4 Libraries" level="project" />
     <orderEntry type="library" name="JSTL 1.2.2 Library" level="project" />
     <orderEntry type="library" name="Spring 4.1.0 Libraries" level="project" />
+    <orderEntry type="library" name="json" level="project" />
   </component>
 </module>

@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="JSTL 1.2.2 Library">
     <CLASSES>
-      <root url="jar://F:/jar/MeEclipseLib/plugins/com.genuitec.eclipse.j2eedt.core_13.0.0.me201605020208/data/libraryset/JSTL1.2.1/lib/javax.servlet.jsp.jstl.jar!/" />
-      <root url="jar://F:/jar/MeEclipseLib/plugins/com.genuitec.eclipse.j2eedt.core_13.0.0.me201605020208/data/libraryset/JSTL1.2.1/lib/jstl-impl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JSTL 1.2.2 Library/JSTL1.2.1/lib/javax.servlet.jsp.jstl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JSTL 1.2.2 Library/JSTL1.2.1/lib/jstl-impl.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
