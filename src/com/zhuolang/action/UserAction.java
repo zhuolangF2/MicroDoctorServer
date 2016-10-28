@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.converters.IntegerArrayConverter;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,28 @@ public class UserAction extends ActionSupport {
     private static final long serialVersionUID = 1L;
     @Autowired
     IUserService service;
-//	String user_name;
-//	String password;
 
+    public String login(){
+        HttpServletResponse response=ServletActionContext.getResponse();
+        HttpServletRequest request=ServletActionContext.getRequest();
+        response.setContentType("text/");
+        String userName = request.getParameter("userName");
+        String passWord = request.getParameter("password");
+        JSONObject object = new JSONObject();
+        object.put("name", "666");
+        object.put("passWord","123");
+        PrintWriter out = null;
+        try {
+            out=response.getWriter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        String jsonString = "{name:" + userName + ";password:" + passWord + "}";
+        out.println(object.toString());
+        out.flush();
+        out.close();
+        return null;
+    }
     /**
      * 测试添加
      *
@@ -49,7 +69,7 @@ public class UserAction extends ActionSupport {
 		 */
 
         // 进行操作。。。
-        response.setContentType("text/html;charset=utf-8");
+//        response.setContentType("text/html;charset=utf-8");
         // 测试插入数据
         User user = new User();
         user.setNickname(request.getParameter("nickname"));
@@ -86,13 +106,10 @@ public class UserAction extends ActionSupport {
      */
     public String delete() throws IOException {
         HttpServletResponse response = ServletActionContext.getResponse();
-        // HttpServletRequest request = ServletActionContext.getRequest();
-        // int id = (int) request.getAttribute("user_id");
+        HttpServletRequest request = ServletActionContext.getRequest();
         response.setContentType("text/html;charset=utf-8");
-//		String name="黄宗贵";
-//		String hql = "from User where name = '"+name+"'";
-        service.deleteUser(service.findUserById(38));
 
+        service.deleteUser(service.findUserById(38));
         // 测试输出json数据
         PrintWriter out = response.getWriter();
         // JSON在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
