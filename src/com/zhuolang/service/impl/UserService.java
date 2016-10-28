@@ -21,6 +21,21 @@ public class UserService implements IUserService {
     @Autowired
     IUserDao dao;
 
+    @Override
+    public boolean userLogin(User user) {
+        String hql = "from User where nickname=? and password=?";
+        List<Object> object=new ArrayList<Object>();
+        object.add(user.getNickname());
+        object.add(user.getPassword());
+        List<User> userList = dao.find(hql, object);
+        System.out.println(userList);
+        if (userList.size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 业务逻辑操作
      */

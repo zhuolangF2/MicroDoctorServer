@@ -6,6 +6,9 @@
     <package name="com.zhuolang.action" extends="struts-default,json-default">
         <!-- 		 拦截add_user的URL，交由UserAction类中的add方法处理  -->
         <!--如果action方法里没有返回值的话，映射不了，为什么？???所以改成了返回空-->
+        <action name="login_user" class="com.zhuolang.action.UserAction"
+                method="login">
+        </action>
         <action name="add_user" class="com.zhuolang.action.UserAction"
                 method="add">
             <!--<result name="success">success.jsp</result>-->

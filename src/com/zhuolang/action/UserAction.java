@@ -7,8 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-import org.apache.commons.beanutils.converters.IntegerArrayConverter;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,27 +31,31 @@ public class UserAction extends ActionSupport {
     @Autowired
     IUserService service;
 
-    public String login(){
-        HttpServletResponse response=ServletActionContext.getResponse();
-        HttpServletRequest request=ServletActionContext.getRequest();
-        response.setContentType("text/");
-        String userName = request.getParameter("userName");
-        String passWord = request.getParameter("password");
-        JSONObject object = new JSONObject();
-        object.put("name", "666");
-        object.put("passWord","123");
-        PrintWriter out = null;
-        try {
-            out=response.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public String login() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+
+        response.setContentType("text/html;charset=utf-8");
+
+        User user = new User();
+        user.setNickname(request.getParameter("userName"));
+        user.setPassword(request.getParameter("password"));
+
+        String result;
+        if (service.userLogin(user)) {
+            result = "login_success";
+//            return "login_success";
+        } else {
+            result = "login_failure";
+//            return "login_failure";
         }
-//        String jsonString = "{name:" + userName + ";password:" + passWord + "}";
-        out.println(object.toString());
+        PrintWriter out = response.getWriter();
+        out.println(result);//返回登录的结果，success or failure
         out.flush();
         out.close();
         return null;
     }
+
     /**
      * 测试添加
      *
@@ -63,7 +65,7 @@ public class UserAction extends ActionSupport {
         HttpServletResponse response = ServletActionContext.getResponse();
         HttpServletRequest request = ServletActionContext.getRequest();
         /*
-		 * 在调用getWriter之前未设置编码(既调用setContentType或者setCharacterEncoding方法设置编码),
+         * 在调用getWriter之前未设置编码(既调用setContentType或者setCharacterEncoding方法设置编码),
 		 * HttpServletResponse则会返回一个用默认的编码(既ISO-8859-1)编码的PrintWriter实例。这样就会
 		 * 造成中文乱码。而且设置编码时必须在调用getWriter之前设置,不然是无效的。
 		 */
@@ -76,19 +78,22 @@ public class UserAction extends ActionSupport {
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
         //强制转换为整形
-        String genderStr=request.getParameter("age");
+        String genderStr = request.getParameter("age");
         int gender = Integer.parseInt(genderStr);
         user.setGender(gender);
         user.setPhone(request.getParameter("phone"));
         user.setAddress(request.getParameter("address"));
         user.setSignature(request.getParameter("signature"));
         user.setIntroduction(request.getParameter("introduction"));
-        String ageStr=request.getParameter("age");
+
+        String ageStr = request.getParameter("age");
         int age = Integer.parseInt(ageStr);
         user.setAge(age);
+
         String typeStr = request.getParameter("type");
         int type = Integer.parseInt(typeStr);
         user.setType(type);
+
         // 测试输出json数据
         PrintWriter out = response.getWriter();
         // JSON在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
@@ -128,8 +133,6 @@ public class UserAction extends ActionSupport {
     public String update() {
         HttpServletResponse response = ServletActionContext.getResponse();
         // HttpServletRequest request = ServletActionContext.getRequest();
-        // request.getAttribute("id");
-        // request.getAttribute("");
         response.setContentType("text/html;charset=utf-8");
         User user = new User();
         // 根据主键id来更新信息，将整个user传到数据库，通过id找到要更新的user
