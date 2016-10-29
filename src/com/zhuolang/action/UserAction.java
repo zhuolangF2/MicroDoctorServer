@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zhuolang.model.Doctor;
+import com.zhuolang.service.IDoctorService;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +31,10 @@ public class UserAction extends ActionSupport {
      */
     private static final long serialVersionUID = 1L;
     @Autowired
-    IUserService service;
+    IUserService userService;
+
+    @Autowired
+    IDoctorService doctorService;
 
     public String login() throws IOException {
         HttpServletResponse response = ServletActionContext.getResponse();
@@ -42,12 +47,10 @@ public class UserAction extends ActionSupport {
         user.setPassword(request.getParameter("password"));
 
         String result;
-        if (service.userLogin(user)) {
+        if (userService.userLogin(user)) {
             result = "login_success";
-//            return "login_success";
         } else {
             result = "login_failure";
-//            return "login_failure";
         }
         PrintWriter out = response.getWriter();
         out.println(result);//返回登录的结果，success or failure
@@ -57,28 +60,32 @@ public class UserAction extends ActionSupport {
     }
 
     /**
-     * 测试添加
+     * 1、普通用户注册  2、医师注册(注册界面有另外的医生附加信息)
      *
      * @throws IOException
      */
     public String add() throws IOException {
         HttpServletResponse response = ServletActionContext.getResponse();
         HttpServletRequest request = ServletActionContext.getRequest();
-        /*
+
+        /**
          * 在调用getWriter之前未设置编码(既调用setContentType或者setCharacterEncoding方法设置编码),
-		 * HttpServletResponse则会返回一个用默认的编码(既ISO-8859-1)编码的PrintWriter实例。这样就会
-		 * 造成中文乱码。而且设置编码时必须在调用getWriter之前设置,不然是无效的。
-		 */
+         * HttpServletResponse则会返回一个用默认的编码(既ISO-8859-1)编码的PrintWriter实例。这样就会
+         * 造成中文乱码。而且设置编码时必须在调用getWriter之前设置,不然是无效的。
+         *
+         * request.setCharacterEncoding（）是设置从request中取得的值或从数据库中取出的值
+         * response.setContentType("text/html;charset=gb2312")是设置页面中为中文编码
+         */
 
         // 进行操作。。。
-//        response.setContentType("text/html;charset=utf-8");
+        response.setContentType("text/html;charset=utf-8");
         // 测试插入数据
         User user = new User();
         user.setNickname(request.getParameter("nickname"));
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
         //强制转换为整形
-        String genderStr = request.getParameter("age");
+        String genderStr = request.getParameter("gender");
         int gender = Integer.parseInt(genderStr);
         user.setGender(gender);
         user.setPhone(request.getParameter("phone"));
@@ -93,12 +100,119 @@ public class UserAction extends ActionSupport {
         String typeStr = request.getParameter("type");
         int type = Integer.parseInt(typeStr);
         user.setType(type);
+        int userId = userService.addUser(user);
+        //根据类型可判断是普通用户注册还是医师注册,如果是医师的话还要在doctor表上添加一个数据
+        if (type==1) {
+            Doctor doctor = new Doctor();
+            doctor.setDoctorId(userId);
+            doctor.setHospital(request.getParameter("hospital"));
+            doctor.setOffice(request.getParameter("office"));
+            int amount = Integer.parseInt(request.getParameter("amount"));
+            doctor.setAmount(amount);
+            doctorService.addDoctor(doctor);
+        }
 
         // 测试输出json数据
         PrintWriter out = response.getWriter();
         // JSON在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
-        String jsonString = service.addUser(user);//返回success和failure
-        out.println(jsonString);
+//        String jsonString = userService.addUser(user);//返回success和failure
+        out.println(userId);
+        out.flush();
+        out.close();
+        return null;
+    }
+
+    /*
+   * 3、密码修改
+   * */
+    public String updatePW() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        response.setContentType("text/html;charset=utf-8");
+        String idStr = request.getParameter("id");
+        int id = Integer.parseInt(idStr);
+        boolean flag = userService.updatePassword(id, request.getParameter("oldPassword"), request.getParameter("newPassword"));
+        String result;
+        if (flag) {
+            result = "updatePassword_success";
+        } else {
+            result = "updatePassword_failure";
+        }
+        // 测试输出json数据
+        PrintWriter out = response.getWriter();
+        // JSON在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
+        out.println(result);
+        out.flush();
+        out.close();
+        return null;
+    }
+
+    /**
+     * 4、普通资料修改(密码跟用户类型（普通用户或医师）不允许改)
+     */
+    public String update() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        response.setContentType("text/html;charset=utf-8");
+        User user = new User();
+        //从当前登录的用户中获取id
+        int id = Integer.parseInt(request.getParameter("id"));
+        user.setId(id);
+        user.setNickname(request.getParameter("nickname"));
+        user.setName(request.getParameter("name"));
+        int gender = Integer.parseInt(request.getParameter("gender"));
+        user.setGender(gender);
+        user.setPhone(request.getParameter("phone"));
+        user.setAddress(request.getParameter("address"));
+        user.setSignature(request.getParameter("signature"));
+        user.setIntroduction(request.getParameter("introduction"));
+        int age = Integer.parseInt(request.getParameter("age"));
+        user.setAge(age);
+        userService.updateUser(user);
+
+        PrintWriter out = response.getWriter();
+        out.println("update_success");
+        out.flush();
+        out.close();
+        return null;
+    }
+
+    /**
+     * 5、用户个人信息资料展示 6、医师个人资料展示
+     *
+     * @throws IOException
+     */
+    public String find() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        response.setContentType("text/html;charset=utf-8");
+        int id = Integer.parseInt(request.getParameter("id"));
+        List<User> list = userService.findUserById(id);
+        if (list != null && list.size() > 0) {
+            request.setAttribute("user_list", list);
+        }
+        //即是获取到密码，但是（model中的toString）不展示出来，就是安卓界面里没有这个展示项，或者后期加密后获取到也没有
+        PrintWriter out = response.getWriter();
+        out.println(list);
+        out.flush();
+        out.close();
+
+        return null;
+    }
+
+    /**
+     * 7、查看医师列表（用户类型为1） 8、查看用户列表（所有的用户列表）
+     *
+     * @throws IOException
+     */
+    public String findByType() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        response.setContentType("text/html;charset=utf-8");
+        int type = Integer.parseInt(request.getParameter("type"));
+
+        PrintWriter out = response.getWriter();
+        out.println(userService.findUserByType(type));
         out.flush();
         out.close();
         return null;
@@ -114,7 +228,7 @@ public class UserAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         response.setContentType("text/html;charset=utf-8");
 
-        service.deleteUser(service.findUserById(38));
+        userService.deleteUser(userService.findUserById(38));
         // 测试输出json数据
         PrintWriter out = response.getWriter();
         // JSON在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
@@ -125,53 +239,5 @@ public class UserAction extends ActionSupport {
         out.close();
 
         return null;
-    }
-
-    /**
-     * 测试修改
-     */
-    public String update() {
-        HttpServletResponse response = ServletActionContext.getResponse();
-        // HttpServletRequest request = ServletActionContext.getRequest();
-        response.setContentType("text/html;charset=utf-8");
-        User user = new User();
-        // 根据主键id来更新信息，将整个user传到数据库，通过id找到要更新的user
-        user.setId(11);
-        user.setNickname("nickname");
-        user.setPassword("123456");
-        user.setName("吴乃福");
-        user.setAge(18);
-        user.setGender(1);
-        user.setPhone("18925060991");
-        user.setAddress("廉江");
-        user.setSignature("道不同，不相为谋");
-        user.setIntroduction("大家好，我叫吴乃福jaslfjlajflajsfajsd");
-        user.setType(0);
-        service.updateUser(user);
-        return "success";
-    }
-
-    /**
-     * 测试查询
-     *
-     * @throws IOException request.setCharacterEncoding（）是设置从request中取得的值或从数据库中取出的值
-     *                     response.setContentType("text/html;charset=gb2312")是设置页面中为中文编码
-     */
-    public String find() throws IOException {
-        HttpServletResponse response = ServletActionContext.getResponse();
-        HttpServletRequest request = ServletActionContext.getRequest();
-        response.setContentType("text/html;charset=utf-8");
-//		String name="吴乃福";
-//		String hql = "from User where name = '"+name+"'";
-        List<User> list = service.findUserById(38);
-        if (list != null && list.size() > 0) {
-            request.setAttribute("students_list", list);
-        }
-        PrintWriter out = response.getWriter();
-        out.println(list);
-        out.flush();
-        out.close();
-
-        return "success";
     }
 }

@@ -20,8 +20,14 @@
         <action name="update_user" class="com.zhuolang.action.UserAction"
                 method="update">
         </action>
+        <action name="update_password" class="com.zhuolang.action.UserAction"
+                method="updatePW">
+        </action>
         <action name="find_user" class="com.zhuolang.action.UserAction"
                 method="find">
+        </action>
+        <action name="findByType_user" class="com.zhuolang.action.UserAction"
+                method="findByType">
         </action>
 
         <action name="add_doctor" class="com.zhuolang.action.DoctorAction"

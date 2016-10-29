@@ -25,7 +25,7 @@ public class UserTest {
 		User user = new User();
 		user.setNickname("nickname");
 		user.setPassword("123456");
-		user.setName("吴乃福");
+		user.setName("黄宗贵");
 		user.setAge(18);
 		user.setGender(0);
 		user.setPhone("18925060991");
@@ -67,6 +67,11 @@ public class UserTest {
 		user.setIntroduction("大家好，我叫吴乃福jaslfjlajflajsfajsd");
 		user.setType(0);
 		service.updateUser(user);
+	}
+
+	@Test
+	public void testUpdatePW() {
+		System.out.println(service.updatePassword(39, "234567", "23456ad"));
 	}
 	
 	@Test

@@ -1,8 +1,10 @@
 package com.zhuolang.service.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.struts2.components.Password;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.zhuolang.dao.IUserDao;
@@ -24,7 +26,7 @@ public class UserService implements IUserService {
     @Override
     public boolean userLogin(User user) {
         String hql = "from User where nickname=? and password=?";
-        List<Object> object=new ArrayList<Object>();
+        List<Object> object = new ArrayList<Object>();
         object.add(user.getNickname());
         object.add(user.getPassword());
         List<User> userList = dao.find(hql, object);
@@ -40,14 +42,8 @@ public class UserService implements IUserService {
      * 业务逻辑操作
      */
     @Override
-    public String addUser(User user) {
-        try {
-            dao.save(user);
-            return "success";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "failure";
-        }
+    public int addUser(User user) {
+            return (int) dao.save(user);//返回主键
     }
 
     @Override
@@ -62,8 +58,40 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void updateUser(User user) {
-        dao.update(user);
+    public boolean updateUser(User user) {
+        String hql = "update User set nickname=?,name=?,gender=?,phone=?,address=?,signature=?,introduction=?,age=? where id=?";
+        List<Object> object = new ArrayList<Object>();
+        object.add(user.getNickname());
+        object.add(user.getName());
+        object.add(user.getGender());
+        object.add(user.getPhone());
+        object.add(user.getAddress());
+        object.add(user.getSignature());
+        object.add(user.getIntroduction());
+        object.add(user.getAge());
+        object.add(user.getId());
+        if (dao.executeHql(hql, object) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updatePassword(int id, String oldPW, String newPW) {
+        String hql1 = "from User where id=?";
+        User user = dao.get(hql1, new Object[]{id});
+        String password = user.getPassword();
+        if (oldPW.equals(password)) {
+            String hql2 = "update User set password=? where id=?";
+            List<Object> object = new ArrayList<Object>();
+            object.add(newPW);
+            object.add(id);
+            dao.executeHql(hql2, object);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -81,6 +109,11 @@ public class UserService implements IUserService {
         return dao.find(hql);
     }
 
+    @Override
+    public List<User> findUserByType(int type) {
+        String hql = "from User where type=?";
+        return dao.find(hql, new Object[]{type});
+    }
 
 //	@Override
 //	public List<User> findUser(String hql) {

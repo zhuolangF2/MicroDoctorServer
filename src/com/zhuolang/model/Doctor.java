@@ -52,7 +52,7 @@ public class Doctor {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Doctor [id=" + id + ", doctorId=" + doctorId + ", hospital="
