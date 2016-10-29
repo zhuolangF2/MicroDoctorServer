@@ -28,7 +28,16 @@ public class Appointment {
     private String diagnose;//医生诊断
     @Column(name = "dstar")
     private double dstar;//评论（星号）
+    @Column(name="dNumber")
+    private int dNumber;
 
+    public int getdNumber() {
+        return dNumber;
+    }
+
+    public void setdNumber(int dNumber) {
+        this.dNumber = dNumber;
+    }
 
     public int getId() {
         return id;
@@ -105,6 +114,7 @@ public class Appointment {
                 ", dateTime=" + dateTime +
                 ", diagnose='" + diagnose + '\'' +
                 ", dstar=" + dstar +
+                ", dNumber=" + dNumber +
                 '}';
     }
 }

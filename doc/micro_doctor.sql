@@ -26,19 +26,20 @@ CREATE TABLE `appointment_tab` (
   `doctorId` int(11) DEFAULT NULL COMMENT '医师ID',
   `seeTime` date DEFAULT NULL COMMENT '就诊日期时间',
   `disease` text CHARACTER SET utf8 COMMENT '病症',
-  `dateTime` date DEFAULT NULL COMMENT '预约时间',
+  `dateTime` timestamp NULL DEFAULT NULL COMMENT '预约时间',
   `diagnose` text CHARACTER SET utf8 COMMENT '医生诊断',
   `dstar` double DEFAULT NULL COMMENT '评论（星号）',
+  `dNumber` int(11) DEFAULT NULL COMMENT '字段排号（预约医师的序号）',
   PRIMARY KEY (`id`),
   KEY `patientId` (`patientId`),
   KEY `doctorId` (`doctorId`),
   CONSTRAINT `doctorId` FOREIGN KEY (`doctorId`) REFERENCES `doctor_tab` (`doctorId`),
   CONSTRAINT `patientId` FOREIGN KEY (`patientId`) REFERENCES `user_tab` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `appointment_tab` */
 
-insert  into `appointment_tab`(`id`,`patientId`,`doctorId`,`seeTime`,`disease`,`dateTime`,`diagnose`,`dstar`) values (2,38,42,'2016-10-18','皮肤发痒,更新','2016-10-18','皮肤炎症',3),(4,38,42,'2016-10-18','皮肤发痒','2016-10-18','皮肤炎症',3),(5,38,42,'2016-10-20','喉咙发炎,喉咙痛','2016-10-20','感冒咳嗽',5),(6,38,42,'2016-10-20','喉咙发炎,喉咙痛','2016-10-20','感冒咳嗽',5);
+insert  into `appointment_tab`(`id`,`patientId`,`doctorId`,`seeTime`,`disease`,`dateTime`,`diagnose`,`dstar`,`dNumber`) values (2,38,42,'2016-10-18','皮肤发痒,更新','2016-10-18 17:26:48','神经病啊你没得救啦',3,1),(4,38,42,'2016-10-29','皮肤发痒','2016-10-29 22:30:29','皮肤炎症',3,0),(5,40,42,'2016-10-20','喉咙发炎,喉咙痛','2016-10-20 17:26:48','感冒咳嗽',5,3),(6,41,42,'2016-10-20','喉咙发炎,喉咙痛','2016-10-20 17:26:48','感冒咳嗽',5,4),(7,38,42,'2016-10-29','喉咙发炎,喉咙痛','2016-10-29 17:26:48','感冒咳嗽',5,5),(8,38,42,'2016-10-29','喉咙发炎,喉咙痛','2016-10-29 17:26:48','感冒咳嗽',5,6),(9,38,42,'2016-10-29','喉咙发炎,喉咙痛','2016-10-29 17:48:40','精神病',5,7),(10,42,57,'2016-10-29','喉咙发炎,喉咙痛','2016-10-29 21:36:35','精神病',0,0);
 
 /*Table structure for table `discuss_tab` */
 

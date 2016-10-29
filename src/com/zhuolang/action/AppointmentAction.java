@@ -3,6 +3,7 @@ package com.zhuolang.action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.zhuolang.model.Appointment;
 import com.zhuolang.service.IAppointmentService;
+import com.zhuolang.util.TimeUtil;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,51 +20,92 @@ import java.util.List;
  * AppointmentAction动作，需要继承ActionSupport父类
  */
 @Controller
-public class AppointmentAction extends ActionSupport{
-    /**
-     * 用来表明类的不同版本间的兼容性。如果你修改了此类, 要修改此值。 否则以前用老版本的类序列化的类恢复时会出错。
-     * 为了在反序列化时，确保类版本的兼容性，最好在每个要序列化的类中加入 private static final long
-     * serialVersionUID这个属性，具体数值自己定义
-     */
-//    private static final long serialVersionUID=1L;
+public class AppointmentAction extends ActionSupport {
+
     @Autowired
     IAppointmentService service;
+
     /**
-     * 测试添加
+     * 1、向某医师申请预约  2、申请资料提交
      *
      * @throws IOException
      */
-    public String add() throws IOException{
+    public String add() throws IOException {
         HttpServletResponse response = ServletActionContext.getResponse();
         HttpServletRequest request = ServletActionContext.getRequest();
-		/*
-		 * 在调用getWriter之前未设置编码(既调用setContentType或者setCharacterEncoding方法设置编码),
-		 * HttpServletResponse则会返回一个用默认的编码(既ISO-8859-1)编码的PrintWriter实例。这样就会
-		 * 造成中文乱码。而且设置编码时必须在调用getWriter之前设置,不然是无效的。
-		 */
-		response.setContentType("text/html;charset=utf-8");
+        response.setContentType("text/html;charset=utf-8");
 
-        //测试插入数据
-        Appointment appointment=new Appointment();
-//        appointment.setId();
-        appointment.setPatientId(38);
-        appointment.setDoctorId(42);
-        //appointment.setSeeTime(new Date());
-        appointment.setDisease("喉咙发炎,喉咙痛");
+        int patientId = Integer.parseInt(request.getParameter("patientId"));
+        int doctorId = Integer.parseInt(request.getParameter("doctorId"));//在安卓界面上通过点击选择一名医师，所以可以取得其id
+        Date seeTime = TimeUtil.strToDate(request.getParameter("seeTime"));
+
+        Appointment appointment = new Appointment();
+        appointment.setPatientId(patientId);
+        appointment.setDoctorId(doctorId);
+        appointment.setSeeTime(seeTime);
+        appointment.setDisease(request.getParameter("disease"));
         appointment.setDateTime(new Date());
-        appointment.setDiagnose("感冒咳嗽");
-        appointment.setDstar(5);
+//        int dNumber = Integer.parseInt(service.findAppointmentByDoctorId(doctorId,seeTime).toString());
+//        appointment.setdNumber(service.findAppointmentByDoctorId(doctorId,seeTime));
 
         service.addAppointment(appointment);
-        //测试输出json数据
-        PrintWriter out=response.getWriter();
-        //json在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
-        String jsonString = "{\"id\":\"123\",\"PatientId\":\"124\",\"DoctorId\":\"125\",\"SeeTime\":\"new Date()\",\"Disease\":\"喉咙发炎,喉咙痛\",\"DateTime\":\"new Date()\",\"Diagnose\":\"感冒咳嗽\",\"Dstar\":\"5\"}";
-        //输出数据
-        out.println(jsonString);
+        PrintWriter out = response.getWriter();
+        out.println("addAppointment_success");//或者失败
         out.flush();
         out.close();
-        return "success";
+        return null;
+    }
+
+    /*
+    * 3、查看医师预约申请队列  4、用户查看某医师预约队列
+    * */
+    public String findByDocId() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        response.setContentType("text/html;charset=utf-8");
+        List<Appointment> list = service.findByDocId(Integer.parseInt(request.getParameter("doctorId")));
+        PrintWriter out = response.getWriter();
+        out.println(list);
+        out.flush();
+        out.close();
+        return null;
+    }
+
+    /**
+     * 6、医师填写就诊结果
+     */
+    public String updateDiagnose() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        response.setContentType("text/html;charset=utf-8");
+        // 根据主键id来更新信息，将整个appointment传到数据库，通过id找到要更新的appointment
+        int id = Integer.parseInt(request.getParameter("id"));
+        String diagnose = request.getParameter("diagnose");
+        service.updateDiagnose(id,diagnose);
+
+        PrintWriter out = response.getWriter();
+        out.println("updateDiagnose_success");
+        out.flush();
+        out.close();
+        return null;
+    }
+
+
+    /**
+     *7、在登录状态下查看个人的预约信息
+     *
+     * @throws IOException
+     */
+    public String findByPatId() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        response.setContentType("text/html;charset=utf-8");
+        List<Appointment> list = service.findByPatId(Integer.parseInt(request.getParameter("patientId")));
+        PrintWriter out = response.getWriter();
+        out.println(list);
+        out.flush();
+        out.close();
+        return null;
     }
 
     /**
@@ -77,9 +119,6 @@ public class AppointmentAction extends ActionSupport{
         // int id = (int) request.getAttribute("user_id");
         response.setContentType("text/html;charset=utf-8");
 
-//        String hql = "from Appointment where id = 3";
-//        service.deleteAppointment(service.findAppointment(hql));
-
         service.deleteAppointment(service.findAppointmentById(3));
 
         // 测试输出json数据
@@ -87,37 +126,6 @@ public class AppointmentAction extends ActionSupport{
         // JSON在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
         String jsonString = "{\"id\":\"123\",\"PatientId\":\"124\",\"DoctorId\":\"125\",\"SeeTime\":\"new Date()\",\"Disease\":\"喉咙发炎,喉咙痛\",\"DateTime\":\"new Date()\",\"Diagnose\":\"感冒咳嗽\",\"Dstar\":\"5\"}";
         // 输出数据
-        out.println(jsonString);
-        out.flush();
-        out.close();
-
-        return "success";
-    }
-
-    /**
-     * 测试修改
-     *
-     */
-    public String update() throws IOException {
-        HttpServletResponse response = ServletActionContext.getResponse();
-//        HttpServletRequest request = ServletActionContext.getRequest();
-        // request.getAttribute("id");
-        // request.getAttribute("");
-        response.setContentType("text/html;charset=utf-8");
-        Appointment appointment = new Appointment();
-        // 根据主键id来更新信息，将整个appointment传到数据库，通过id找到要更新的appointment
-        appointment.setId(4);
-        appointment.setPatientId(38);
-        appointment.setDoctorId(42);
-        appointment.setSeeTime(new Date());
-        appointment.setDisease("皮肤发痒");
-        appointment.setDateTime(new Date());
-        appointment.setDiagnose("皮肤炎症");
-        appointment.setDstar(3);
-        service.updateAppointment(appointment);
-
-        PrintWriter out = response.getWriter();
-        String jsonString = "{\"id\":\"123\",\"PatientId\":\"124\",\"DoctorId\":\"125\",\"SeeTime\":\"new Date()\",\"Disease\":\"喉咙发炎,喉咙痛\",\"DateTime\":\"new Date()\",\"Diagnose\":\"感冒咳嗽\",\"Dstar\":\"5\"}";
         out.println(jsonString);
         out.flush();
         out.close();

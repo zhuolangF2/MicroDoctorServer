@@ -11,8 +11,6 @@
         </action>
         <action name="add_user" class="com.zhuolang.action.UserAction"
                 method="add">
-            <!--<result name="success">success.jsp</result>-->
-            <!--<result name="failure">failure.jsp</result>-->
         </action>
         <action name="delete_user" class="com.zhuolang.action.UserAction"
                 method="delete">
@@ -67,9 +65,11 @@
         <action name="find_discuss" class="com.zhuolang.action.DiscussAction" method="find"/>
 
         <action name="add_appointment" class="com.zhuolang.action.AppointmentAction" method="add"/>
-        <action name="update_appointment" class="com.zhuolang.action.AppointmentAction" method="update"/>
+        <action name="update_appointment" class="com.zhuolang.action.AppointmentAction" method="updateDiagnose"/>
         <action name="delete_appointment" class="com.zhuolang.action.AppointmentAction" method="delete"/>
         <action name="find_appointment" class="com.zhuolang.action.AppointmentAction" method="find"/>
+        <action name="findByPID_appointment" class="com.zhuolang.action.AppointmentAction" method="findByPatId"/>
+        <action name="findByDID_appointment" class="com.zhuolang.action.AppointmentAction" method="findByDocId"/>
 
     </package>
 </struts>    

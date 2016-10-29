@@ -2,6 +2,7 @@ package com.zhuolang.test;
 
 import com.zhuolang.model.Appointment;
 import com.zhuolang.service.IAppointmentService;
+import com.zhuolang.util.TimeUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,13 @@ import java.util.List;
 public class AppointmentTest {
     @Autowired
     IAppointmentService service;
-    @Test
-    public void testAdd(){
 
-        System.out.println("service:"+service);
+    @Test
+    public void testAdd() {
+
+        System.out.println("service:" + service);
         //测试插入数据
-        Appointment appointment=new Appointment();
-//        appointment.setId(5);
+        Appointment appointment = new Appointment();
         appointment.setPatientId(38);
         appointment.setDoctorId(42);
         appointment.setSeeTime(new Date());
@@ -36,22 +37,18 @@ public class AppointmentTest {
         appointment.setDateTime(new Date());
         appointment.setDiagnose("感冒咳嗽");
         appointment.setDstar(5);
+        appointment.setdNumber(5);
 
         service.addAppointment(appointment);
-        System.out.println("执行到这里1");
     }
 
     @Test
-    public void testDeleteById(){
-
-//        String hql = "from Appointment where id = 1";
-//        service.deleteAppointment(service.findAppointment(hql));
-
+    public void testDeleteById() {
         service.deleteAppointment(service.findAppointmentById(1));
     }
 
     @Test
-    public void testUpdate(){
+    public void testUpdate() {
         Appointment appointment = new Appointment();
         // 根据主键id来更新信息，将整个appointment传到数据库，通过id找到要更新的appointment
         appointment.setId(2);
@@ -62,17 +59,33 @@ public class AppointmentTest {
         appointment.setDateTime(new Date());
         appointment.setDiagnose("皮肤炎症");
         appointment.setDstar(3);
-        service.updateAppointment(appointment);
 
+        service.updateAppointment(appointment);
     }
 
     @Test
-    public void testFind(){
-//        String hql = "from Appointment where patientId = 2";
-//        List<Appointment> list = service.findAppointment(hql);
-//        System.out.println(list);
-        System.out.println(service.findAllAppointment());
+    public void testFind() {
+//        System.out.println(service.findAllAppointment());
         System.out.println(service.findAppointmentById(2));
+//        System.out.println(TimeUtil.stringToDate("2016-10-29"));
     }
+
+    @Test
+    public void testFindMax() {
+//        int dNumber = service.findAppointmentByDoctorId(42, "2016-10-29").get(2).getdNumber();
+//        Date date = TimeUtil.strToDate("2016-10-29");
+//        System.out.println(service.findAppointmentByDoctorId(42, date));
+    }
+
+    @Test
+    public void testFindByDocId() {
+        System.out.println(service.findByDocId(57));
+    }
+
+    @Test
+    public void testUpdateByDID() {
+        service.updateDiagnose(9,"精神病");
+    }
+
 
 }
