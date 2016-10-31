@@ -3,11 +3,11 @@ package com.zhuolang.service.impl;
 import com.zhuolang.dao.IAppointmentDao;
 import com.zhuolang.model.Appointment;
 import com.zhuolang.service.IAppointmentService;
-import com.zhuolang.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,14 +33,14 @@ public class AppointmentService implements IAppointmentService {
         }
     }
 
-//    @Override
-//    public List<Appointment> findAppointmentByDoctorId(int doctorId, Date date) {
-//        String hql = "select max(dNumber) from Appointment where doctorId=? and seeTime=?";
-//        List<Object> idObject = new ArrayList<Object>();
-//        idObject.add(doctorId);
-//        idObject.add(date);
-//        return dao.get(hql, idObject);
-//    }
+    @Override
+    public List<Appointment> findAppByDId(int doctorId, Date date) {
+        String hql = "from Appointment where doctorId=? and seeTime=? ORDER BY dNumber DESC";
+        List<Object> idObject = new ArrayList<Object>();
+        idObject.add(doctorId);
+        idObject.add(date);
+        return dao.find(hql, idObject);
+    }
 
     @Override
     public void updateAppointment(Appointment appointment) {

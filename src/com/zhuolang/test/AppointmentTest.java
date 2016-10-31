@@ -73,8 +73,8 @@ public class AppointmentTest {
     @Test
     public void testFindMax() {
 //        int dNumber = service.findAppointmentByDoctorId(42, "2016-10-29").get(2).getdNumber();
-//        Date date = TimeUtil.strToDate("2016-10-29");
-//        System.out.println(service.findAppointmentByDoctorId(42, date));
+        Date date = TimeUtil.strToDate("2016-10-29");
+        System.out.println(service.findAppByDId(42, date).get(0).getdNumber());
     }
 
     @Test

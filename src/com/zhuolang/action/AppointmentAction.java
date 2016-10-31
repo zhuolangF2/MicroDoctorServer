@@ -45,8 +45,8 @@ public class AppointmentAction extends ActionSupport {
         appointment.setSeeTime(seeTime);
         appointment.setDisease(request.getParameter("disease"));
         appointment.setDateTime(new Date());
-//        int dNumber = Integer.parseInt(service.findAppointmentByDoctorId(doctorId,seeTime).toString());
-//        appointment.setdNumber(service.findAppointmentByDoctorId(doctorId,seeTime));
+        int dNumber = service.findAppByDId(doctorId,seeTime).get(0).getdNumber()+1;
+        appointment.setdNumber(dNumber);
 
         service.addAppointment(appointment);
         PrintWriter out = response.getWriter();
