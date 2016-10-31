@@ -137,17 +137,12 @@ public class AppointmentAction extends ActionSupport {
      * 测试查询
      *
      * @throws IOException
-     *
-     * request.setCharacterEncoding（）是设置从request中取得的值或从数据库中取出的值
-    response.setContentType("text/html;charset=gb2312")是设置页面中为中文编码
      */
     public String find() throws IOException {
         HttpServletResponse response = ServletActionContext.getResponse();
         HttpServletRequest request=ServletActionContext.getRequest();
         response.setContentType("text/html;charset=utf-8");
 
-//        String hql = "from Appointment where id = 2";
-//        List<Appointment> list=service.findAppointment(hql);
         List<Appointment> list = service.findAppointmentById(2);
         if (list!=null&&list.size()>0){
             request.setAttribute("students_list",list);//获取参数

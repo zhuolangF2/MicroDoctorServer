@@ -29,6 +29,16 @@ public class LikeService implements ILikeService {
     }
 
     @Override
+    public List<Like> findBySLId(int sendId, int likesId) {
+        String hql = "from Like where sendId=? and likesId=?";
+        List<Object> idObject=new ArrayList<Object>();
+        idObject.add(sendId);
+        idObject.add(likesId);
+        List<Like> likeList = dao.find(hql, idObject);
+        return likeList;
+    }
+
+    @Override
     public List<Like> findLikeById(int id) {
         String hql = "from Like l where l.id=?";
         List<Object> idObject=new ArrayList<Object>();

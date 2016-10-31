@@ -22,18 +22,20 @@ public class LikeAction extends ActionSupport{
     @Autowired
     ILikeService service;
 
+    /*
+    * 4、点赞
+    * */
     public String add() throws IOException {
         HttpServletResponse response = ServletActionContext.getResponse();
-        //如何在Struts2中获取request对象
         HttpServletRequest request= ServletActionContext.getRequest();
-
         response.setContentType("text/html;charset=utf-8");
-        Like like = new Like();
-        like.setSendId(8);
-        like.setLikesId(38);
-        Date date = new Date();
-        like.setLikesTime(date);
 
+        Like like = new Like();
+        int sendId = Integer.parseInt(request.getParameter("sendId"));
+        int likesId = Integer.parseInt(request.getParameter("likesId"));
+        like.setSendId(sendId);
+        like.setLikesId(likesId);//用户id，就是谁点的赞
+        like.setLikesTime(new Date());
         service.addLike(like);
 
         PrintWriter out = response.getWriter();
@@ -41,29 +43,28 @@ public class LikeAction extends ActionSupport{
         out.println(jsonString);
         out.flush();
         out.close();
-
-        return "success";
+        return null;
     }
 
+    /*
+    * 4、取消点赞
+    * */
     public String delete() throws IOException {
         HttpServletResponse response = ServletActionContext.getResponse();
         HttpServletRequest request = ServletActionContext.getRequest();
-
         response.setContentType("text/html;charset=utf-8");
 
-//        String hql = "from Like where id = '" + 7 + "'";
-//        service.deleteLike(service.findLike(hql));
-
-        service.deleteLike(service.findLikeById(8));
-
+        int sendId = Integer.parseInt(request.getParameter("sendId"));
+        int likesId = Integer.parseInt(request.getParameter("likesId"));
+        service.deleteLike(service.findBySLId(sendId,likesId));
 
         PrintWriter out = response.getWriter();
-        String jsonString="{\"like success\"}";
+        String jsonString="{\"取消点赞\"}";
         out.println(jsonString);
         out.flush();
         out.close();
 
-        return "success";
+        return null;
     }
 
     public String update() throws IOException {

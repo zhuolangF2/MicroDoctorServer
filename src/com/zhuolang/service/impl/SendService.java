@@ -58,7 +58,6 @@ public class SendService implements ISendService {
             dto.setId(send.getSendId());
             dto.setSend_content(send.getSendContent());
 
-//            String discuss_hql = "from Discuss d where d.sendId=:sendId";
             String discuss_hql = "from Discuss d where d.sendId=?";
             List<Discuss> dList = discussDao.find(discuss_hql, idObject);
 
@@ -72,16 +71,46 @@ public class SendService implements ISendService {
     }
 
     @Override
+    public List<SendDto> findDtoByUID(int userId) {
+        String hql = "from Send where userId=?";
+        List<Object> idObject = new ArrayList<Object>();
+        idObject.add(userId);
+        List<Send> list = dao.find(hql, idObject);
+
+        List<SendDto> sendDtoList = new ArrayList<SendDto>();
+        for (Send send : list) {
+            SendDto dto = new SendDto();
+            dto.setId(send.getSendId());
+            dto.setUser_id(send.getUserId());
+            dto.setSend_content(send.getSendContent());
+            dto.setCreate_time(new Date());
+
+            String likes_hql = "select count(*) from Like as l where l.sendId=?";
+            idObject.clear();
+            idObject.add(send.getSendId());
+            dto.setLikes(likeDao.count(likes_hql, idObject).intValue());//点赞人数
+
+            String discuss_hql = "from Discuss d where d.sendId=?";
+            List<Discuss> dList = discussDao.find(discuss_hql, idObject);
+            if (dList != null) {
+                dto.setDiscussList(dList);
+            }
+            sendDtoList.add(dto);
+        }
+        return sendDtoList;
+    }
+
+    @Override
     public List<Send> findAllSend() {
         String hql = "from Send";
         return dao.find(hql);
     }
 
     @Override
-    public SendDto findSendDtoById(int id) {
+    public SendDto findDtoById(int sendId) {
         String hql = "from Send send where send.sendId=?";
         List<Object> idObject = new ArrayList<Object>();
-        idObject.add(id);
+        idObject.add(sendId);
         List<Send> list = dao.find(hql, idObject);//将id传进hql语句的？中,具体看BaseDao
 
         SendDto dto = new SendDto();

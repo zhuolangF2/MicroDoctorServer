@@ -58,7 +58,9 @@ public class LikeTest {
 //        System.out.println(list);
 
 //        List<Like> likeList=service.findAllLike();
-        List<Like> likeList = service.findLikeById(14);
+//        List<Like> likeList = service.findLikeById(14);
+        List<Like> likeList = service.findBySLId(11,42);
+
         System.out.println(likeList);
 
     }

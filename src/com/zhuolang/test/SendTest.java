@@ -60,8 +60,9 @@ public class SendTest {
 
     @Test
     public void testFindById() {
-        System.out.println(service.findSendDtoById(6));
-        System.out.println(service.findSendById(6));
+//        System.out.println(service.findDtoById(6));
+//        System.out.println(service.findSendById(6));
+        System.out.println(service.findDtoByUID(39).toString());
     }
 
     @Test

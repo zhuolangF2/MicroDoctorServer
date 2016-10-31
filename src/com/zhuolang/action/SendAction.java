@@ -23,6 +23,9 @@ public class SendAction extends ActionSupport{
     @Autowired
     ISendService service;
 
+    /*
+    * 1、动态发表
+    * */
     public String add() throws IOException{
         HttpServletResponse response = ServletActionContext.getResponse();
         HttpServletRequest request = ServletActionContext.getRequest();
@@ -30,8 +33,8 @@ public class SendAction extends ActionSupport{
         response.setContentType("text/html;charset=utf-8");
 
         Send send = new Send();
-        send.setSendContent("发送信息");
-        send.setUserId(39);
+        send.setSendContent(request.getParameter("sendContent"));
+        send.setUserId(Integer.parseInt(request.getParameter("userId")));
         send.setSendTime(new Date());
 
         PrintWriter out = response.getWriter();
@@ -40,7 +43,38 @@ public class SendAction extends ActionSupport{
         out.flush();
         out.close();
         service.addSend(send);
-        return "success";
+        return null;
+    }
+
+    /*
+    * 2、获取动态列表(动态列表包括了discuss表里的评论内容和likes点赞人数等信息,返回的数据是sendDto)
+    * */
+    public String findAll() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        response.setContentType("text/html;charset=utf-8");
+
+        List<SendDto> list = service.findSendDto();
+        PrintWriter out = response.getWriter();
+        out.println(list.toString());
+        out.flush();
+        out.close();
+        return null;
+    }
+
+    /*
+    * 3、动态详情:通过用户id找到此用户发表的动态
+    * */
+    public String findByUID() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        response.setContentType("text/html;charset=utf-8");
+
+        List<SendDto> list = service.findDtoByUID(Integer.parseInt(request.getParameter("userId")));
+        PrintWriter out = response.getWriter();
+        out.println(list.toString());
+        out.flush();
+        out.close();
+        return null;
     }
 
     public String delete() throws IOException {
@@ -48,9 +82,6 @@ public class SendAction extends ActionSupport{
         HttpServletRequest request = ServletActionContext.getRequest();
 
         response.setContentType("text/html;charset=utf-8");
-//        int userId=38;
-//        String hql = "from Send where userId = '"+userId+"'";
-//        service.deleteSend(service.findSend(hql));
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"Send success\"}";
@@ -82,23 +113,4 @@ public class SendAction extends ActionSupport{
         return "success";
     }
 
-    public String find() throws IOException {
-        HttpServletResponse response = ServletActionContext.getResponse();
-        HttpServletRequest request = ServletActionContext.getRequest();
-
-        response.setContentType("text/html;charset=utf-8");
-
-        List<SendDto> list = service.findSendDto();
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
-
-        PrintWriter out = response.getWriter();
-        out.println("{\"Send success\"}");
-        out.println(list.toString());
-        out.flush();
-        out.close();
-
-        return "success";
-    }
 }
