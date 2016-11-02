@@ -25,9 +25,9 @@ public class UserService implements IUserService {
 
     @Override
     public boolean userLogin(User user) {
-        String hql = "from User where nickname=? and password=?";
+        String hql = "from User where phone=? and password=?";
         List<Object> object = new ArrayList<Object>();
-        object.add(user.getNickname());
+        object.add(user.getPhone());
         object.add(user.getPassword());
         List<User> userList = dao.find(hql, object);
         System.out.println(userList);
@@ -54,6 +54,17 @@ public class UserService implements IUserService {
             for (int i = 0; i < list.size(); i++) {
                 dao.delete(list.get(i));
             }
+        }
+    }
+
+    @Override
+    public boolean findPhone(String phone) {
+        String hql="from User where phone=?";
+        User user = dao.get(hql, new Object[]{phone});
+        if (user == null) {//为空就是没有，找不到，返回false
+            return false;
+        } else {
+            return true;
         }
     }
 

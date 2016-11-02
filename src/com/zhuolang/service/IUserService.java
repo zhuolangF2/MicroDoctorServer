@@ -29,4 +29,6 @@ public interface IUserService {
 
     //	List<User> findUser(String hql);
     void deleteUser(List<User> findUser);
+
+    boolean findPhone(String phone);
 }

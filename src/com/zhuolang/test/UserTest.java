@@ -39,8 +39,6 @@ public class UserTest {
 	
 	@Test
 	public void testDeleteByName(){
-//		String name="吴乃福";
-//		String hql = "from User where name = '"+name+"'";
 		service.deleteUser(service.findUserById(38));
 	}
 	
@@ -76,11 +74,12 @@ public class UserTest {
 	
 	@Test
 	public void testFind(){
-//		String name="吴乃福";
-//		String hql = "from User where name = '"+name+"'";
-//		List<User> list = service.findUserById(38);
 		List<User> list = service.findAllUser();
 		System.out.println(list);
+	}
+	@Test
+	public void FindPhone(){
+		System.out.println(service.findPhone("18925060991"));
 	}
 
 }

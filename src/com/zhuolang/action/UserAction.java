@@ -41,9 +41,9 @@ public class UserAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
 
         response.setContentType("text/html;charset=utf-8");
-
+//      通过电话号码来登录，电话号码是唯一，且不为空
         User user = new User();
-        user.setNickname(request.getParameter("userName"));
+        user.setPhone(request.getParameter("phone"));
         user.setPassword(request.getParameter("password"));
 
         String result;
@@ -80,45 +80,54 @@ public class UserAction extends ActionSupport {
         // 进行操作。。。
         response.setContentType("text/html;charset=utf-8");
         // 测试插入数据
-        User user = new User();
-        user.setNickname(request.getParameter("nickname"));
-        user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
-        //强制转换为整形
-        String genderStr = request.getParameter("gender");
-        int gender = Integer.parseInt(genderStr);
-        user.setGender(gender);
-        user.setPhone(request.getParameter("phone"));
-        user.setAddress(request.getParameter("address"));
-        user.setSignature(request.getParameter("signature"));
-        user.setIntroduction(request.getParameter("introduction"));
+        String phone = request.getParameter("phone");
 
-        String ageStr = request.getParameter("age");
-        int age = Integer.parseInt(ageStr);
-        user.setAge(age);
+        if (findPhone(phone)) {
+            PrintWriter out = response.getWriter();
+            String jsonString = "该电话号码已经注册，请输入其他电话号码";//返回success和failure
+            out.println(jsonString);
+            out.flush();
+            out.close();
+        } else {
+            User user = new User();
+            user.setPhone(phone);
+            user.setNickname(request.getParameter("nickname"));
+            user.setPassword(request.getParameter("password"));
+            user.setName(request.getParameter("name"));
+            //强制转换为整形
+            String genderStr = request.getParameter("gender");
+            int gender = Integer.parseInt(genderStr);
+            user.setGender(gender);
+            user.setAddress(request.getParameter("address"));
+            user.setSignature(request.getParameter("signature"));
+            user.setIntroduction(request.getParameter("introduction"));
 
-        String typeStr = request.getParameter("type");
-        int type = Integer.parseInt(typeStr);
-        user.setType(type);
-        int userId = userService.addUser(user);
-        //根据类型可判断是普通用户注册还是医师注册,如果是医师的话还要在doctor表上添加一个数据
-        if (type==1) {
-            Doctor doctor = new Doctor();
-            doctor.setDoctorId(userId);
-            doctor.setHospital(request.getParameter("hospital"));
-            doctor.setOffice(request.getParameter("office"));
-            int amount = Integer.parseInt(request.getParameter("amount"));
-            doctor.setAmount(amount);
-            doctorService.addDoctor(doctor);
+            String ageStr = request.getParameter("age");
+            int age = Integer.parseInt(ageStr);
+            user.setAge(age);
+
+            String typeStr = request.getParameter("type");
+            int type = Integer.parseInt(typeStr);
+            user.setType(type);
+            int userId = userService.addUser(user);
+            //根据类型可判断是普通用户注册还是医师注册,如果是医师的话还要在doctor表上添加一个数据
+            if (type == 1) {
+                Doctor doctor = new Doctor();
+                doctor.setDoctorId(userId);
+                doctor.setHospital(request.getParameter("hospital"));
+                doctor.setOffice(request.getParameter("office"));
+                int amount = Integer.parseInt(request.getParameter("amount"));
+                doctor.setAmount(amount);
+                doctorService.addDoctor(doctor);
+            }
+            // 测试输出json数据
+            PrintWriter out = response.getWriter();
+            String jsonString = "注册成功，请用该电话号码登录：userId";//返回success和failure
+            out.println(jsonString);
+            out.println(userId);
+            out.flush();
+            out.close();
         }
-
-        // 测试输出json数据
-        PrintWriter out = response.getWriter();
-        // JSON在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
-//        String jsonString = userService.addUser(user);//返回success和failure
-        out.println(userId);
-        out.flush();
-        out.close();
         return null;
     }
 
@@ -218,6 +227,15 @@ public class UserAction extends ActionSupport {
         return null;
     }
 
+    /*
+    * 寻找是否存在这个号码
+    * true:存在
+    * false:不存在
+    * */
+    public boolean findPhone(String phone) {
+        return userService.findPhone(phone);//找不到，返回false,就是没有
+    }
+
     /**
      * 测试删除
      *
@@ -240,4 +258,5 @@ public class UserAction extends ActionSupport {
 
         return null;
     }
+
 }
