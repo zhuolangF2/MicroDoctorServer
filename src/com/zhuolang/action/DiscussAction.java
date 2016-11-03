@@ -42,7 +42,7 @@ public class DiscussAction extends ActionSupport{
 
         PrintWriter out = response.getWriter();
         String jsonString="{\"评论成功\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
         return null;
@@ -75,7 +75,7 @@ public class DiscussAction extends ActionSupport{
 
         PrintWriter out = response.getWriter();
         String jsonString="{\"discuss success\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
 
@@ -93,7 +93,7 @@ public class DiscussAction extends ActionSupport{
 
         PrintWriter out = response.getWriter();
         String jsonString="{\"discuss success\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
 
@@ -105,13 +105,11 @@ public class DiscussAction extends ActionSupport{
         HttpServletRequest request = ServletActionContext.getRequest();
 
         response.setContentType("text/html;charset=utf-8");
-//        String hql="from Discuss where id ='"+3+"'";
 
         PrintWriter out = response.getWriter();
         String jsonString="{\"discuss success\"}";
         out.println(jsonString);
-//        out.println(service.findDiscuss(hql));
-        out.println(service.findDiscussById(3));
+        out.print(service.findDiscussById(3));
         out.flush();
         out.close();
         return "success";

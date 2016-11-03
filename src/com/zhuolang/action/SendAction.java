@@ -39,7 +39,7 @@ public class SendAction extends ActionSupport{
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"Send success\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
         service.addSend(send);
@@ -55,7 +55,7 @@ public class SendAction extends ActionSupport{
 
         List<SendDto> list = service.findSendDto();
         PrintWriter out = response.getWriter();
-        out.println(list.toString());
+        out.print(list.toString());
         out.flush();
         out.close();
         return null;
@@ -71,7 +71,7 @@ public class SendAction extends ActionSupport{
 
         List<SendDto> list = service.findDtoByUID(Integer.parseInt(request.getParameter("userId")));
         PrintWriter out = response.getWriter();
-        out.println(list.toString());
+        out.print(list.toString());
         out.flush();
         out.close();
         return null;
@@ -85,7 +85,7 @@ public class SendAction extends ActionSupport{
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"Send success\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
 
@@ -105,7 +105,7 @@ public class SendAction extends ActionSupport{
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"Send success\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
 

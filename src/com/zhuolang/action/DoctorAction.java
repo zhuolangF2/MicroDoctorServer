@@ -38,7 +38,7 @@ public class DoctorAction extends ActionSupport {
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"doctor\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
 
@@ -55,7 +55,7 @@ public class DoctorAction extends ActionSupport {
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"doctor\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
 
@@ -77,7 +77,7 @@ public class DoctorAction extends ActionSupport {
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"doctor\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
         return "success";
@@ -97,7 +97,7 @@ public class DoctorAction extends ActionSupport {
 
         PrintWriter out = response.getWriter();
 //        String jsonString = "{\"doctor\"}";
-        out.println(list);
+        out.print(list);
         out.flush();
         out.close();
         return "success";

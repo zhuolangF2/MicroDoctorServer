@@ -50,7 +50,7 @@ public class AppointmentAction extends ActionSupport {
 
         service.addAppointment(appointment);
         PrintWriter out = response.getWriter();
-        out.println("addAppointment_success");//或者失败
+        out.print("addAppointment_success");//或者失败
         out.flush();
         out.close();
         return null;
@@ -65,7 +65,7 @@ public class AppointmentAction extends ActionSupport {
         response.setContentType("text/html;charset=utf-8");
         List<Appointment> list = service.findByDocId(Integer.parseInt(request.getParameter("doctorId")));
         PrintWriter out = response.getWriter();
-        out.println(list);
+        out.print(list);
         out.flush();
         out.close();
         return null;
@@ -84,7 +84,7 @@ public class AppointmentAction extends ActionSupport {
         service.updateDiagnose(id,diagnose);
 
         PrintWriter out = response.getWriter();
-        out.println("updateDiagnose_success");
+        out.print("updateDiagnose_success");
         out.flush();
         out.close();
         return null;
@@ -102,7 +102,7 @@ public class AppointmentAction extends ActionSupport {
         response.setContentType("text/html;charset=utf-8");
         List<Appointment> list = service.findByPatId(Integer.parseInt(request.getParameter("patientId")));
         PrintWriter out = response.getWriter();
-        out.println(list);
+        out.print(list);
         out.flush();
         out.close();
         return null;
@@ -126,7 +126,7 @@ public class AppointmentAction extends ActionSupport {
         // JSON在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
         String jsonString = "{\"id\":\"123\",\"PatientId\":\"124\",\"DoctorId\":\"125\",\"SeeTime\":\"new Date()\",\"Disease\":\"喉咙发炎,喉咙痛\",\"DateTime\":\"new Date()\",\"Diagnose\":\"感冒咳嗽\",\"Dstar\":\"5\"}";
         // 输出数据
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
 
@@ -149,7 +149,7 @@ public class AppointmentAction extends ActionSupport {
         }
 
         PrintWriter out = response.getWriter();
-        out.println(list);
+        out.print(list);
         out.flush();
         out.close();
 

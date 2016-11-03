@@ -53,7 +53,7 @@ public class UserAction extends ActionSupport {
             result = "login_failure";
         }
         PrintWriter out = response.getWriter();
-        out.println(result);//返回登录的结果，success or failure
+        out.print(result);//返回登录的结果，success or failure
         out.flush();
         out.close();
         return null;
@@ -84,8 +84,7 @@ public class UserAction extends ActionSupport {
 
         if (findPhone(phone)) {
             PrintWriter out = response.getWriter();
-            String jsonString = "该电话号码已经注册，请输入其他电话号码";//返回success和failure
-            out.println(jsonString);
+            out.print("register_failure");//该电话号码已经注册，请输入其他电话号码
             out.flush();
             out.close();
         } else {
@@ -120,11 +119,9 @@ public class UserAction extends ActionSupport {
                 doctor.setAmount(amount);
                 doctorService.addDoctor(doctor);
             }
-            // 测试输出json数据
+            //在这里添加失败会怎么样？
             PrintWriter out = response.getWriter();
-            String jsonString = "注册成功，请用该电话号码登录：userId";//返回success和failure
-            out.println(jsonString);
-            out.println(userId);
+            out.print("register_success");
             out.flush();
             out.close();
         }
@@ -150,7 +147,7 @@ public class UserAction extends ActionSupport {
         // 测试输出json数据
         PrintWriter out = response.getWriter();
         // JSON在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
-        out.println(result);
+        out.print(result);
         out.flush();
         out.close();
         return null;
@@ -180,7 +177,7 @@ public class UserAction extends ActionSupport {
         userService.updateUser(user);
 
         PrintWriter out = response.getWriter();
-        out.println("update_success");
+        out.print("update_success");
         out.flush();
         out.close();
         return null;
@@ -202,7 +199,7 @@ public class UserAction extends ActionSupport {
         }
         //即是获取到密码，但是（model中的toString）不展示出来，就是安卓界面里没有这个展示项，或者后期加密后获取到也没有
         PrintWriter out = response.getWriter();
-        out.println(list);
+        out.print(list);
         out.flush();
         out.close();
 
@@ -221,7 +218,7 @@ public class UserAction extends ActionSupport {
         int type = Integer.parseInt(request.getParameter("type"));
 
         PrintWriter out = response.getWriter();
-        out.println(userService.findUserByType(type));
+        out.print(userService.findUserByType(type));
         out.flush();
         out.close();
         return null;
@@ -252,7 +249,7 @@ public class UserAction extends ActionSupport {
         // JSON在传递过程中是普通字符串形式传递的，这里简单拼接一个做测试
         String jsonString = "{\"user\":{\"id\":\"123\",\"name\":\"张三\",\"say\":\"Hello , i am a action to print a json!\",\"password\":\"JSON\"},\"success\":true}";
         // 输出数据
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
 

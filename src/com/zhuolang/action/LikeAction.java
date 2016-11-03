@@ -40,7 +40,7 @@ public class LikeAction extends ActionSupport{
 
         PrintWriter out = response.getWriter();
         String jsonString="{\"like success\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
         return null;
@@ -60,7 +60,7 @@ public class LikeAction extends ActionSupport{
 
         PrintWriter out = response.getWriter();
         String jsonString="{\"取消点赞\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
 
@@ -82,7 +82,7 @@ public class LikeAction extends ActionSupport{
 
         PrintWriter out = response.getWriter();
         String jsonString="{\"like success\"}";
-        out.println(jsonString);
+        out.print(jsonString);
         out.flush();
         out.close();
 
@@ -102,8 +102,8 @@ public class LikeAction extends ActionSupport{
 
         PrintWriter out = response.getWriter();
         String jsonString = "{\"success like\"}";
-        out.println(jsonString);
-        out.println(likeList);
+        out.print(jsonString);
+        out.print(likeList);
         out.flush();
         out.close();
 
