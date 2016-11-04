@@ -15,6 +15,7 @@
           <element id="library" level="project" name="JUnit 4" />
           <element id="library" level="project" name="Struts 2.1 Libraries" />
           <element id="library" level="project" name="json" />
+          <element id="library" level="project" name="fastjson-1.2.7" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="MicroDoctorServer/web/Web" />

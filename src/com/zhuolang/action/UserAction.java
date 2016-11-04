@@ -2,11 +2,18 @@ package com.zhuolang.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.zhuolang.dto.DoctorDto;
 import com.zhuolang.model.Doctor;
 import com.zhuolang.service.IDoctorService;
 import org.apache.struts2.ServletActionContext;
@@ -206,8 +213,28 @@ public class UserAction extends ActionSupport {
         return null;
     }
 
+    /*
+    * 7、查看医师列表（用户类型为1）
+    * */
+    public String findDoctorDto() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        List<DoctorDto> doctorDtos = userService.findDoctorDto();
+//        String jsonUser = JSON.toJSONString(doctorDtos, true);
+//        PrintWriter out = response.getWriter();
+        JSONArray jsonArray = new JSONArray();
+        for (DoctorDto a : doctorDtos) {
+            JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
+            jsonArray.add(jsonObj);
+        }
+        PrintWriter out = response.getWriter();
+        out.print(jsonArray.toString());
+        out.flush();
+        out.close();
+        return null;
+    }
+
     /**
-     * 7、查看医师列表（用户类型为1） 8、查看用户列表（所有的用户列表）
+     * 7、查看医师列表（用户类型为1）8、查看用户列表（所有的用户列表）
      *
      * @throws IOException
      */
@@ -216,13 +243,23 @@ public class UserAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         response.setContentType("text/html;charset=utf-8");
         int type = Integer.parseInt(request.getParameter("type"));
-        List<User> userList = userService.findUserByType(type);
-
-        PrintWriter out = response.getWriter();
-        out.print(userList);
-        out.flush();
-        out.close();
-        return null;
+        if (type == 1) {
+            findDoctorDto();
+            return null;
+        } else {
+            List<User> userList = userService.findUserByType(type);
+//            JSONArray jsonArray = new JSONArray();
+//            for (User a : userList) {
+//                JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
+//                jsonArray.add(jsonObj);
+//            }
+            String jsonStr = JSON.toJSONString(userList, true);
+            PrintWriter out = response.getWriter();
+            out.print(jsonStr);
+            out.flush();
+            out.close();
+            return null;
+        }
     }
 
     /*

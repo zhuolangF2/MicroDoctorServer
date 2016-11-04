@@ -3,6 +3,7 @@ package com.zhuolang.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.zhuolang.dto.DoctorDto;
 import com.zhuolang.model.User;
 
 /**
@@ -24,8 +25,12 @@ public interface IUserService {
 
     List<User> findAllUser();
 
-    /*查找所有医师或者所有普通用户*/
+    /*查找所有普通用户*/
     List<User> findUserByType(int type);
+
+
+    /*查找所有医师*/
+    List<DoctorDto> findDoctorDto();
 
     //	List<User> findUser(String hql);
     void deleteUser(List<User> findUser);

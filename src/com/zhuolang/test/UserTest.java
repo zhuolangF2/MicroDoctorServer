@@ -82,4 +82,13 @@ public class UserTest {
 		System.out.println(service.findPhone("18925060991"));
 	}
 
+	@Test
+	public void FindByType(){
+		System.out.println(service.findUserByType(1));
+	}
+
+	@Test
+	public void findDoctorDto(){
+		System.out.println(service.findDoctorDto());
+	}
 }
