@@ -105,8 +105,8 @@ public class UserAction extends ActionSupport {
             int gender = Integer.parseInt(genderStr);
             user.setGender(gender);
             user.setAddress(request.getParameter("address"));
-            user.setSignature(request.getParameter("signature"));
-            user.setIntroduction(request.getParameter("introduction"));
+//            user.setSignature(request.getParameter("signature"));
+//            user.setIntroduction(request.getParameter("introduction"));
 
             String ageStr = request.getParameter("age");
             int age = Integer.parseInt(ageStr);
@@ -117,15 +117,15 @@ public class UserAction extends ActionSupport {
             user.setType(type);
             int userId = userService.addUser(user);
             //根据类型可判断是普通用户注册还是医师注册,如果是医师的话还要在doctor表上添加一个数据
-            if (type == 1) {
-                Doctor doctor = new Doctor();
-                doctor.setDoctorId(userId);
-                doctor.setHospital(request.getParameter("hospital"));
-                doctor.setOffice(request.getParameter("office"));
-                int amount = Integer.parseInt(request.getParameter("amount"));
-                doctor.setAmount(amount);
-                doctorService.addDoctor(doctor);
-            }
+//            if (type == 1) {
+//                Doctor doctor = new Doctor();
+//                doctor.setDoctorId(userId);
+//                doctor.setHospital(request.getParameter("hospital"));
+//                doctor.setOffice(request.getParameter("office"));
+//                int amount = Integer.parseInt(request.getParameter("amount"));
+//                doctor.setAmount(amount);
+//                doctorService.addDoctor(doctor);
+//            }
             //在这里添加失败会怎么样？
             PrintWriter out = response.getWriter();
             out.print("register_success");
