@@ -216,9 +216,10 @@ public class UserAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         response.setContentType("text/html;charset=utf-8");
         int type = Integer.parseInt(request.getParameter("type"));
+        List<User> userList = userService.findUserByType(type);
 
         PrintWriter out = response.getWriter();
-        out.print(userService.findUserByType(type));
+        out.print(userList);
         out.flush();
         out.close();
         return null;
