@@ -27,6 +27,9 @@
         <action name="findByType_user" class="com.zhuolang.action.UserAction"
                 method="findByType">
         </action>
+        <action name="findByPhone_user" class="com.zhuolang.action.UserAction"
+                method="findByPhone">
+        </action>
 
         <action name="add_doctor" class="com.zhuolang.action.DoctorAction"
                 method="add">

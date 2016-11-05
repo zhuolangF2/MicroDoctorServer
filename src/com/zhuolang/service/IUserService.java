@@ -36,4 +36,5 @@ public interface IUserService {
     void deleteUser(List<User> findUser);
 
     boolean findPhone(String phone);
+    List<User> findByPhone(String phone);
 }

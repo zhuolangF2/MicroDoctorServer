@@ -213,6 +213,34 @@ public class UserAction extends ActionSupport {
         return null;
     }
 
+    /**
+     * 6、用户个人信息资料展示  、医师个人资料展示
+     *
+     * @throws IOException
+     */
+    public String findByPhone() throws IOException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        response.setContentType("text/html;charset=utf-8");
+
+        List<User> list = userService.findByPhone(request.getParameter("phone"));
+        if (list != null && list.size() > 0) {
+            request.setAttribute("user_list", list);
+        }
+        JSONArray jsonArray = new JSONArray();
+        for (User a : list) {
+            JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
+            jsonArray.add(jsonObj);
+        }
+        //即是获取到密码，但是（model中的toString）不展示出来，就是安卓界面里没有这个展示项，或者后期加密后获取到也没有
+        PrintWriter out = response.getWriter();
+        out.print(jsonArray);
+        out.flush();
+        out.close();
+
+        return null;
+    }
+
     /*
     * 7、查看医师列表（用户类型为1）
     * */
@@ -248,14 +276,14 @@ public class UserAction extends ActionSupport {
             return null;
         } else {
             List<User> userList = userService.findUserByType(type);
-//            JSONArray jsonArray = new JSONArray();
-//            for (User a : userList) {
-//                JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
-//                jsonArray.add(jsonObj);
-//            }
-            String jsonStr = JSON.toJSONString(userList, true);
+            JSONArray jsonArray = new JSONArray();
+            for (User a : userList) {
+                JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
+                jsonArray.add(jsonObj);
+            }
+//            String jsonStr = JSON.toJSONString(userList, true);
             PrintWriter out = response.getWriter();
-            out.print(jsonStr);
+            out.print(jsonArray);
             out.flush();
             out.close();
             return null;

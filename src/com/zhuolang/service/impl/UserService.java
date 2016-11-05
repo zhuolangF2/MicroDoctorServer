@@ -75,6 +75,16 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public List<User> findByPhone(String phone) {
+        String hql="from User where phone=?";
+        List<Object> idObject = new ArrayList<Object>();
+        idObject.add(phone);
+        List<User> userList = userDao.find(hql, idObject);
+        return userList;
+    }
+
+
+    @Override
     public boolean updateUser(User user) {
         String hql = "update User set nickname=?,name=?,gender=?,phone=?,address=?,signature=?,introduction=?,age=? where id=?";
         List<Object> object = new ArrayList<Object>();
