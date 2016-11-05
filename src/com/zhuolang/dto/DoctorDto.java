@@ -21,6 +21,10 @@ public class DoctorDto {
     private String office;
     private int amount;
 
+    public void setType(int type) {
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }

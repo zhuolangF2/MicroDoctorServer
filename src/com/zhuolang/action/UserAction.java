@@ -227,14 +227,42 @@ public class UserAction extends ActionSupport {
         if (list != null && list.size() > 0) {
             request.setAttribute("user_list", list);
         }
-        JSONArray jsonArray = new JSONArray();
-        for (User a : list) {
-            JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
-            jsonArray.add(jsonObj);
+
+//        JSONArray jsonArray = new JSONArray();
+//        for (User a : list) {
+//            JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
+//            jsonArray.add(jsonObj);
+//        }
+        DoctorDto userDto=new DoctorDto();
+        userDto.setId(list.get(0).getId());
+        userDto.setName(list.get(0).getName());
+        userDto.setNickname(list.get(0).getNickname());
+        userDto.setGender(list.get(0).getGender());
+        userDto.setAge(list.get(0).getAge());
+        userDto.setPhone(list.get(0).getPhone());
+        userDto.setAddress(list.get(0).getAddress());
+        userDto.setSignature(list.get(0).getSignature());
+        userDto.setIntroduction(list.get(0).getIntroduction());
+
+
+        if (list.get(0).getType()==1){
+            List<Doctor> doctorList=doctorService.findDoctorById(list.get(0).getId());
+            userDto.setType(1);
+            userDto.setHospital(doctorList.get(0).getHospital());
+            userDto.setOffice(doctorList.get(0).getOffice());
+            userDto.setAmount(doctorList.get(0).getAmount());
         }
+        else{
+            userDto.setType(0);
+            userDto.setHospital("");
+            userDto.setOffice("");
+            userDto.setAmount(0);
+        }
+        JSONObject jsonObject=new JSONObject();
+        String userJson=jsonObject.toJSONString(userDto);
         //即是获取到密码，但是（model中的toString）不展示出来，就是安卓界面里没有这个展示项，或者后期加密后获取到也没有
         PrintWriter out = response.getWriter();
-        out.print(jsonArray);
+        out.print(userJson);
         out.flush();
         out.close();
 
