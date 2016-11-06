@@ -181,8 +181,17 @@ public class UserAction extends ActionSupport {
         user.setIntroduction(request.getParameter("introduction"));
         int age = Integer.parseInt(request.getParameter("age"));
         user.setAge(age);
+        int type = Integer.parseInt(request.getParameter("type"));
         userService.updateUser(user);
-
+        if (type==1){
+            List<Doctor> doctorList=doctorService.findDoctorByDoctorId(id);
+            doctorList.get(0).setId(doctorList.get(0).getId());
+            doctorList.get(0).setDoctorId(id);
+            doctorList.get(0).setHospital(request.getParameter("hospital"));
+            doctorList.get(0).setOffice(request.getParameter("office"));
+            doctorList.get(0).setAmount(doctorList.get(0).getAmount());
+            doctorService.updateDoctor(doctorList.get(0));
+        }
         PrintWriter out = response.getWriter();
         out.print("update_success");
         out.flush();
