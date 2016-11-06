@@ -45,7 +45,7 @@ public class AppointmentAction extends ActionSupport {
         appointment.setSeeTime(seeTime);
         appointment.setDisease(request.getParameter("disease"));
         appointment.setDateTime(new Date());
-        int dNumber = service.findAppByDId(doctorId,seeTime).get(0).getdNumber()+1;
+        int dNumber = service.CountAppByDIdAndDate(doctorId,seeTime)+1;
         appointment.setdNumber(dNumber);
 
         service.addAppointment(appointment);

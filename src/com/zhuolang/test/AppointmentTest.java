@@ -84,7 +84,13 @@ public class AppointmentTest {
 
     @Test
     public void testUpdateByDID() {
-        service.updateDiagnose(9,"精神病");
+        service.updateDiagnose(9, "精神病");
+    }
+
+    @Test
+    public void testCountAppByDIdAndDate() {
+        Date date = TimeUtil.strToDate("2016-10-29");
+        System.out.println(service.CountAppByDIdAndDate(67,date));
     }
 
 

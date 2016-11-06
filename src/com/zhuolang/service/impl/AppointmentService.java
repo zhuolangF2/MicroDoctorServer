@@ -33,6 +33,15 @@ public class AppointmentService implements IAppointmentService {
         }
     }
 
+    //计算一位医师当天预约的人数
+    public int CountAppByDIdAndDate(int doctorId, Date date) {
+        String hql = "select count(*) from Appointment where doctorId=? and seeTime=?";
+        List<Object> idObject = new ArrayList<Object>();
+        idObject.add(doctorId);
+        idObject.add(date);
+        return dao.count(hql,idObject).intValue();
+    }
+
     @Override
     public List<Appointment> findAppByDId(int doctorId, Date date) {
         String hql = "from Appointment where doctorId=? and seeTime=? ORDER BY dNumber DESC";

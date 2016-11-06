@@ -27,6 +27,9 @@ public interface IAppointmentService {
 
     List<Appointment> findByPatId(int id);
 
-    List<Appointment> findAppByDId(int doctorId,Date date);
+    List<Appointment> findAppByDId(int doctorId, Date date);
+
+    int CountAppByDIdAndDate(int doctorId, Date date);
+
     void deleteAppointment(List<Appointment> findAppointment);
 }
