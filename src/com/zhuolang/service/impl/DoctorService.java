@@ -45,6 +45,16 @@ public class DoctorService implements IDoctorService {
 		return doctorList;
 	}
 
+	@Override
+	public List<Doctor> findDoctorByDoctorId(int doctorId) {
+		String hql="from Doctor doctor where doctor.doctorId=?";
+
+		List<Object> doctorIdObject = new ArrayList<Object>();
+		doctorIdObject.add(doctorId);
+		List<Doctor> doctList = dao.find(hql,doctorIdObject);
+		return doctList;
+	}
+
 //	@Override
 //	public List<Doctor> findDoctor(String hql) {
 //		return dao.find(hql);

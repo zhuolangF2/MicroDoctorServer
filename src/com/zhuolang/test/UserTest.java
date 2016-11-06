@@ -90,5 +90,6 @@ public class UserTest {
 	@Test
 	public void findDoctorDto(){
 		System.out.println(service.findDoctorDto());
+		System.out.println(service.findByPhone("18925060998"));
 	}
 }

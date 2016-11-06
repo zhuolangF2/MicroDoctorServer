@@ -21,6 +21,8 @@ public interface IDoctorService {
 
     List<Doctor> findDoctorById(int id);
 
+    List<Doctor> findDoctorByDoctorId(int doctorId);
+
     void deleteDoctor(List<Doctor> findDoctor);
 
 }

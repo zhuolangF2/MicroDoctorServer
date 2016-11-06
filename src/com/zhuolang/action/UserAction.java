@@ -243,10 +243,9 @@ public class UserAction extends ActionSupport {
         userDto.setAddress(list.get(0).getAddress());
         userDto.setSignature(list.get(0).getSignature());
         userDto.setIntroduction(list.get(0).getIntroduction());
-
-
         if (list.get(0).getType()==1){
-            List<Doctor> doctorList=doctorService.findDoctorById(list.get(0).getId());
+            List<Doctor> doctorList=doctorService.findDoctorByDoctorId(list.get(0).getId());
+
             userDto.setType(1);
             userDto.setHospital(doctorList.get(0).getHospital());
             userDto.setOffice(doctorList.get(0).getOffice());
