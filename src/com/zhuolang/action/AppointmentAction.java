@@ -1,8 +1,14 @@
 package com.zhuolang.action;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.opensymphony.xwork2.ActionSupport;
+import com.zhuolang.dto.DoctorDto;
 import com.zhuolang.model.Appointment;
 import com.zhuolang.service.IAppointmentService;
+import com.zhuolang.service.IDoctorService;
+import com.zhuolang.service.IUserService;
 import com.zhuolang.util.TimeUtil;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +30,11 @@ public class AppointmentAction extends ActionSupport {
 
     @Autowired
     IAppointmentService service;
+
+    @Autowired
+    IDoctorService doctorService;
+    @Autowired
+    IUserService userService;
 
     /**
      * 1、向某医师申请预约  2、申请资料提交
@@ -101,8 +112,15 @@ public class AppointmentAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         response.setContentType("text/html;charset=utf-8");
         List<Appointment> list = service.findByPatId(Integer.parseInt(request.getParameter("patientId")));
+        String name = userService.findUserById(list.get(0).getDoctorId()).get(0).getName();
+        JSONArray jsonArray = new JSONArray();
+        for (Appointment a : list) {
+            JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
+            jsonArray.add(jsonObj);
+        }
+
         PrintWriter out = response.getWriter();
-        out.print(list);
+        out.print(jsonArray.toString());
         out.flush();
         out.close();
         return null;
