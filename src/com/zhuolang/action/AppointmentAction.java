@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensymphony.xwork2.ActionSupport;
+import com.zhuolang.dto.AppointmentDto;
 import com.zhuolang.dto.DoctorDto;
 import com.zhuolang.model.Appointment;
+import com.zhuolang.model.User;
 import com.zhuolang.service.IAppointmentService;
 import com.zhuolang.service.IDoctorService;
 import com.zhuolang.service.IUserService;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -112,15 +115,20 @@ public class AppointmentAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         response.setContentType("text/html;charset=utf-8");
         List<Appointment> list = service.findByPatId(Integer.parseInt(request.getParameter("patientId")));
-        String name = userService.findUserById(list.get(0).getDoctorId()).get(0).getName();
-        JSONArray jsonArray = new JSONArray();
-        for (Appointment a : list) {
-            JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
-            jsonArray.add(jsonObj);
-        }
 
         PrintWriter out = response.getWriter();
-        out.print(jsonArray.toString());
+        if (list != null && list.size() > 0) {
+            request.setAttribute("user_list", list);
+            JSONArray jsonArray = new JSONArray();
+            for (Appointment a : list) {
+                JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
+                jsonArray.add(jsonObj);
+            }
+            out.print(jsonArray.toString());
+        }
+        else {
+            out.print("find_failure");
+        }
         out.flush();
         out.close();
         return null;
