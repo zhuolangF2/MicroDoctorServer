@@ -1,5 +1,6 @@
 package com.zhuolang.service;
 
+import com.zhuolang.dto.AppointmentDto;
 import com.zhuolang.model.Appointment;
 
 import java.util.Date;
@@ -25,7 +26,7 @@ public interface IAppointmentService {
 
     List<Appointment> findAppointmentById(int id);
 
-    List<Appointment> findByPatId(int id);
+    List<AppointmentDto> findByPatId(int id);
 
     List<Appointment> findAppByDId(int doctorId, Date date);
 

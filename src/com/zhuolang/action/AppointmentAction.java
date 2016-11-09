@@ -4,10 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensymphony.xwork2.ActionSupport;
-//import com.zhuolang.dto.AppointmentDto;
-import com.zhuolang.dto.DoctorDto;
+import com.zhuolang.dto.AppointmentDto;
 import com.zhuolang.model.Appointment;
-import com.zhuolang.model.User;
 import com.zhuolang.service.IAppointmentService;
 import com.zhuolang.service.IDoctorService;
 import com.zhuolang.service.IUserService;
@@ -20,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +33,7 @@ public class AppointmentAction extends ActionSupport {
 
     @Autowired
     IDoctorService doctorService;
+
     @Autowired
     IUserService userService;
 
@@ -59,7 +57,7 @@ public class AppointmentAction extends ActionSupport {
         appointment.setSeeTime(seeTime);
         appointment.setDisease(request.getParameter("disease"));
         appointment.setDateTime(new Date());
-        int dNumber = service.CountAppByDIdAndDate(doctorId,seeTime)+1;
+        int dNumber = service.CountAppByDIdAndDate(doctorId, seeTime) + 1;
         appointment.setdNumber(dNumber);
 
         service.addAppointment(appointment);
@@ -95,7 +93,7 @@ public class AppointmentAction extends ActionSupport {
         // 根据主键id来更新信息，将整个appointment传到数据库，通过id找到要更新的appointment
         int id = Integer.parseInt(request.getParameter("id"));
         String diagnose = request.getParameter("diagnose");
-        service.updateDiagnose(id,diagnose);
+        service.updateDiagnose(id, diagnose);
 
         PrintWriter out = response.getWriter();
         out.print("updateDiagnose_success");
@@ -106,7 +104,7 @@ public class AppointmentAction extends ActionSupport {
 
 
     /**
-     *7、在登录状态下查看个人的预约信息
+     * 7、在登录状态下查看个人的预约信息
      *
      * @throws IOException
      */
@@ -114,19 +112,18 @@ public class AppointmentAction extends ActionSupport {
         HttpServletResponse response = ServletActionContext.getResponse();
         HttpServletRequest request = ServletActionContext.getRequest();
         response.setContentType("text/html;charset=utf-8");
-        List<Appointment> list = service.findByPatId(Integer.parseInt(request.getParameter("patientId")));
+        List<AppointmentDto> list = service.findByPatId(Integer.parseInt(request.getParameter("patientId")));
 
         PrintWriter out = response.getWriter();
         if (list != null && list.size() > 0) {
             request.setAttribute("user_list", list);
             JSONArray jsonArray = new JSONArray();
-            for (Appointment a : list) {
+            for (AppointmentDto a : list) {
                 JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
                 jsonArray.add(jsonObj);
             }
             out.print(jsonArray.toString());
-        }
-        else {
+        } else {
             out.print("find_failure");
         }
         out.flush();
@@ -166,12 +163,12 @@ public class AppointmentAction extends ActionSupport {
      */
     public String find() throws IOException {
         HttpServletResponse response = ServletActionContext.getResponse();
-        HttpServletRequest request=ServletActionContext.getRequest();
+        HttpServletRequest request = ServletActionContext.getRequest();
         response.setContentType("text/html;charset=utf-8");
 
         List<Appointment> list = service.findAppointmentById(2);
-        if (list!=null&&list.size()>0){
-            request.setAttribute("students_list",list);//获取参数
+        if (list != null && list.size() > 0) {
+            request.setAttribute("students_list", list);//获取参数
         }
 
         PrintWriter out = response.getWriter();

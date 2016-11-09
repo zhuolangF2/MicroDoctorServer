@@ -1,7 +1,10 @@
 package com.zhuolang.service.impl;
 
 import com.zhuolang.dao.IAppointmentDao;
+import com.zhuolang.dao.impl.UserDao;
+import com.zhuolang.dto.AppointmentDto;
 import com.zhuolang.model.Appointment;
+import com.zhuolang.model.User;
 import com.zhuolang.service.IAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,8 @@ public class AppointmentService implements IAppointmentService {
     // 注入服务层，操作数据持久化
     @Autowired
     IAppointmentDao dao;
+    @Autowired
+    UserDao userDao;
 
     /**
      * 业务逻辑操作
@@ -39,7 +44,7 @@ public class AppointmentService implements IAppointmentService {
         List<Object> idObject = new ArrayList<Object>();
         idObject.add(doctorId);
         idObject.add(date);
-        return dao.count(hql,idObject).intValue();
+        return dao.count(hql, idObject).intValue();
     }
 
     @Override
@@ -57,7 +62,7 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public void updateDiagnose(int id,String diagnose) {
+    public void updateDiagnose(int id, String diagnose) {
         String hql = "update Appointment set diagnose=? where id=?";
         List<Object> idObject = new ArrayList<Object>();
         idObject.add(diagnose);
@@ -86,12 +91,37 @@ public class AppointmentService implements IAppointmentService {
         return dao.find(hql, idObject);
     }
 
+//    @Override
+//    public List<Appointment> findByPatId(int id) {
+//        String hql = "from Appointment where patientId=?";
+//        List<Object> idObject = new ArrayList<Object>();
+//        idObject.add(id);
+//        return dao.find(hql, idObject);
+//    }
+
     @Override
-    public List<Appointment> findByPatId(int id) {
+    public List<AppointmentDto> findByPatId(int id) {
         String hql = "from Appointment where patientId=?";
         List<Object> idObject = new ArrayList<Object>();
         idObject.add(id);
-        return dao.find(hql, idObject);
+        List<Appointment> appointments;
+        List<AppointmentDto> appointmentDtos = new ArrayList<AppointmentDto>();
+        appointments = dao.find(hql, idObject);
+        for (int i = 0; i < appointments.size(); i++) {
+            User doctor = userDao.get(User.class, appointments.get(i).getDoctorId());
+            AppointmentDto dto = new AppointmentDto();
+            dto.setId(appointments.get(i).getId());
+            dto.setDateTime(appointments.get(i).getDateTime());
+            dto.setDiagnose(appointments.get(i).getDiagnose());
+            dto.setDisease(appointments.get(i).getDisease());
+            dto.setdNumber(appointments.get(i).getdNumber());
+            dto.setDstar(appointments.get(i).getDstar());
+            dto.setPatientId(appointments.get(i).getPatientId());
+            dto.setSeeTime(appointments.get(i).getSeeTime());
+            dto.setDoctor_name(doctor.getName());
+            appointmentDtos.add(dto);
+        }
+        return appointmentDtos;
     }
 
 
