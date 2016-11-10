@@ -83,6 +83,11 @@ public class AppointmentTest {
     }
 
     @Test
+    public void testFindByPId() {
+        System.out.println(service.findByPatId(48));
+    }
+
+    @Test
     public void testUpdateByDID() {
         service.updateDiagnose(9, "精神病");
     }

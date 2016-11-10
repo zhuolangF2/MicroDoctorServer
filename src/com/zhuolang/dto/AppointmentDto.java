@@ -90,16 +90,14 @@ public class AppointmentDto {
         this.dNumber = dNumber;
     }
 
-    
-    
 
     public String getDoctor_name() {
-		return doctor_name;
-	}
+        return doctor_name;
+    }
 
-	public void setDoctor_name(String doctor_name) {
-		this.doctor_name = doctor_name;
-	}
+    public void setDoctor_name(String doctor_name) {
+        this.doctor_name = doctor_name;
+    }
 
     @Override
     public String toString() {
@@ -116,4 +114,5 @@ public class AppointmentDto {
                 ", dNumber=" + dNumber +
                 '}';
     }
+
 }

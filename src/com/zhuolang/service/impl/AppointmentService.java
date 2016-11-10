@@ -111,6 +111,7 @@ public class AppointmentService implements IAppointmentService {
             User doctor = userDao.get(User.class, appointments.get(i).getDoctorId());
             AppointmentDto dto = new AppointmentDto();
             dto.setId(appointments.get(i).getId());
+            dto.setDoctorId(appointments.get(i).getDoctorId());
             dto.setDateTime(appointments.get(i).getDateTime());
             dto.setDiagnose(appointments.get(i).getDiagnose());
             dto.setDisease(appointments.get(i).getDisease());
