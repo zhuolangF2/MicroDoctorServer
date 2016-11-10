@@ -30,18 +30,19 @@ public class UserService implements IUserService {
     IDoctorDao doctorDao;
 
     @Override
-    public boolean userLogin(User user) {
+    public List<User> userLogin(User user) {
         String hql = "from User where phone=? and password=?";
         List<Object> object = new ArrayList<Object>();
         object.add(user.getPhone());
         object.add(user.getPassword());
         List<User> userList = userDao.find(hql, object);
-        System.out.println(userList);
-        if (userList.size() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return userList;
+//        System.out.println(userList);
+//        if (userList.size() > 0) {
+//            return true;
+//        } else {
+//            return false;
+//        }
     }
 
     /**

@@ -13,7 +13,7 @@ import com.zhuolang.model.User;
  */
 //@Service
 public interface IUserService {
-    boolean userLogin(User user);
+    List<User> userLogin(User user);
 
     int addUser(User user);
 
