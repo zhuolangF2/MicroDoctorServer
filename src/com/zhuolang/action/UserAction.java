@@ -52,10 +52,10 @@ public class UserAction extends ActionSupport {
         User user = new User();
         user.setPhone(request.getParameter("phone"));
         user.setPassword(request.getParameter("password"));
-
         String result;
-        if (userService.userLogin(user)) {
-            result = "login_success";
+        List<User> userList=userService.userLogin(user);
+        if (userList.size() > 0) {
+            result = "login_success"+userList.get(0).getType();
         } else {
             result = "login_failure";
         }
